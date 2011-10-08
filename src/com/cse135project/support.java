@@ -5,7 +5,7 @@ import java.util.*;
 
 
 public class support{
-    public Vector getCountries(String path){
+    public Vector<String> getCountries(String path){
         countries c = new countries();
         return c.getVector(path);
     }
@@ -30,9 +30,9 @@ public class support{
 }
 
 class countries{
-    Vector c = new Vector();
+    Vector<String> c = new Vector<String>();
 
-    public Vector getVector(String path){
+    public Vector<String> getVector(String path){
         if(c.isEmpty())
             this.initVector(path);
         return c;

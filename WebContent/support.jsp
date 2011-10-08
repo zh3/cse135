@@ -6,10 +6,10 @@
   <% 
    	support s = new support();   	
    	
-   	String path1 = config.getServletContext().getRealPath("countries.txt");
-   	String path2 = config.getServletContext().getRealPath("universities.txt");
-    String path3 = config.getServletContext().getRealPath("majors.txt");
-    String path4 = config.getServletContext().getRealPath("specializations.txt");
+   	String path1 = config.getServletContext().getRealPath("txtdata/countries.txt");
+   	String path2 = config.getServletContext().getRealPath("txtdata/universities.txt");
+    String path3 = config.getServletContext().getRealPath("txtdata/majors.txt");
+    String path4 = config.getServletContext().getRealPath("txtdata/specializations.txt");
 	
     //getCountries returns a vector of the countries to be used for choosing citizenship
     Vector countries = s.getCountries(path1);    
