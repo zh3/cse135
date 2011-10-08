@@ -1,4 +1,4 @@
-<%@page import="support.*, java.util.*" %>
+<%@page import="com.cse135project.*, java.util.*" %>
 
 <HTML>
  <HEAD> <TITLE> Support Example</TITLE> </HEAD>
