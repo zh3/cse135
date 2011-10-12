@@ -7,6 +7,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Choose Discipline</title>
+		<!-- Get the majors vector and set the chosuniversityid attribute -->
 			<%
 			support s = new support();
 			String majorsPath = config.getServletContext().getRealPath("txtdata/majors.txt");
@@ -25,7 +26,7 @@
 <body>
 <h3>Provide Degrees - Choose Discipline</h3>
 
-
+<!-- Loop through the majors vector, making radio buttons for each major -->
 
 <form name="myform" action= "moreDegrees.jsp" method="GET">
 	<input type="hidden" name="newUniversity" value="<%=newUniversity %>"/>

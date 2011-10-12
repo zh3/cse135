@@ -8,6 +8,8 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>Provide Degrees - Choose Location</title>
+		<!-- get universities vector and sett attribute resstatus  -->
+		
 		<%
 			String resStatus = request.getParameter("residencyStatus");
 			session.setAttribute("residencyStatus", resStatus);
@@ -28,7 +30,7 @@
 	<body>
 		<h3>Provide Degrees - Choose University Location</h3>
 		
-		
+		<!-- make a 3-column table of all the locations, linking to provideDegreesChooseUniversity-->
 		<table>
 			<tr>
 			<%for (int i = 0; i < universities.size(); i++) {
