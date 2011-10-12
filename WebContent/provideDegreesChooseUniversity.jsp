@@ -8,6 +8,8 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>Provide Degrees - Choose University</title>
+		<!-- Set the attribute for chosencountryorstate id and
+		   Get the university list for that chosen country or state  -->
 			<% 
 			
 			Integer chosenCountryOrStateId = Integer.parseInt(request.getParameter("chosenCountryOrStateId"));
@@ -15,13 +17,16 @@
 			support s = new support();
 			String universitiesPath = config.getServletContext().getRealPath("txtdata/universities.txt");
 			Vector universities = s.getUniversities(universitiesPath);
-			 Vector tuple = (Vector)universities.get(chosenCountryOrStateId);
-			 Vector universityList = (Vector)tuple.get(1);
+			Vector tuple = (Vector)universities.get(chosenCountryOrStateId);
+			Vector universityList = (Vector)tuple.get(1);
 			
 			%>
 </head>
 <body>
 <h3>Provide Degrees - Choose University</h3>
+<!-- print out a 3-column table of all the universities for that chosen country or state
+	Provide an option for the user to add his or her own university.
+ -->
 <form action= "provideDegreesChooseDiscipline.jsp?chosenUniversityId=<%= universityList.size() %>" method="POST">
 	Don't see your university? Enter here:  <input type="text" size="10" name="newUniversity"/>
 	<input type= "submit" value="Submit"/>
