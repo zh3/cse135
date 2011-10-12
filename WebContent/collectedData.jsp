@@ -19,6 +19,7 @@
 			String lastName = (String) session.getAttribute("lastName");
 			Integer countryCitizenshipId = (Integer) session.getAttribute("countryOfCitizenshipId");
 			Integer countryResidenceId = (Integer) session.getAttribute("countryOfResidenceId");
+			/*james code*/
 			
 			String streetAddress = (String) session.getAttribute("streetAddress");
 			String city = (String) session.getAttribute("city");
