@@ -24,7 +24,7 @@ public class support{
 	        return m.getVector(path);
     }
 
-    public Vector getSpecializations(String path){
+    public Vector<String> getSpecializations(String path){
 	        countries s = new countries();
 	        return s.getVector(path);
     }
