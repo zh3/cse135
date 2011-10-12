@@ -26,10 +26,11 @@
 
 
 
-<form name="myform" action= "moreDegrees.jsp?newUniversity =<%=newUniversity %>" method="POST">
+<form name="myform" action= "moreDegrees.jsp" method="GET">
+	<input type="hidden" name="newUniversity" value="<%=newUniversity %>"/>
 <br>
 <%for (int i = 0; i < majors.size(); i++) { %>
-	 <INPUT TYPE="radio" NAME="radios" VALUE=<%=majors.get(i)%> >
+	 <INPUT TYPE="radio" NAME="radios" VALUE="<%=majors.get(i)%>" >
      <%= majors.get(i) %>
     <BR>
     <%} %>

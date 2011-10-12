@@ -7,8 +7,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>More Degrees</title>
 		<% 
-			
-		   
            int i = 0;
 		   int j = 0;
 		   String chosenUniversity;
@@ -28,7 +26,10 @@
            String countryOrState = (String)tuple.get(0);
            
 			 Vector<String> universityList = (Vector<String>)tuple.get(1);
+			 out.println("size is: " + universityList.size());
+			 out.println("id is: " + chosenUniversityId);
 			 if(universityList.size() == chosenUniversityId){
+				out.println("in if statement");
 				 chosenUniversity = request.getParameter("newUniversity");
 			 }
 			 else{
@@ -47,7 +48,7 @@
 				}
 			submittedDegree = countryOrState+" "+chosenUniversity+" "+" "+ chosenDegree+" "+request.getParameter("radios")+" "+request.getParameter("month/year")+" "+"GPA/expectedGPA: "+request.getParameter("GPA/expectedGPA");
 			session.setAttribute("submittedDegree"+ Integer.toString(i), submittedDegree);
-			%>
+		%>
 </head>
 <body>
 <%
