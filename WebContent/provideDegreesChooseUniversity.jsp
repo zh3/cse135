@@ -1,3 +1,5 @@
+<%@page import="com.cse135project.*, java.util.*" %>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
@@ -5,7 +7,7 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<title>Choose University</title>
+		<title>Provide Degrees - Choose University</title>
 			<% 
 			
 			Integer chosenCountryOrStateId = Integer.parseInt(request.getParameter("chosenCountryOrStateId"));
@@ -19,13 +21,10 @@
 			%>
 </head>
 <body>
-<h3>Choose University</h3>
-
-<%@ include file="collectedData.jsp" %>
-<form name="myform3" action= "provideDegreesChooseDiscipline.jsp?chosenUniversityId=<%= universityList.size() %>" method="POST">
-<br> Don't see your university? Enter here:  <input type="text" size="10" name="newUniversity"/>
-  <input type= "submit" value="Submit"/>
-
+<h3>Provide Degrees - Choose University</h3>
+<form action= "provideDegreesChooseDiscipline.jsp?chosenUniversityId=<%= universityList.size() %>" method="POST">
+	Don't see your university? Enter here:  <input type="text" size="10" name="newUniversity"/>
+	<input type= "submit" value="Submit"/>
 </form>
                <table>
 			<tr>

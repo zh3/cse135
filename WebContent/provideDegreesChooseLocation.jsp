@@ -1,3 +1,5 @@
+<%@page import="com.cse135project.*, java.util.*" %>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="saveAddress.jsp" %>
@@ -24,9 +26,7 @@
 		%>
 	</head>
 	<body>
-	<h3>Choose Location</h3>
-		<!-- Display all previously collected data -->
-		<%@ include file="collectedData.jsp" %>
+		<h3>Provide Degrees - Choose University Location</h3>
 		
 		
 		<table>

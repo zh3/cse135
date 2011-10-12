@@ -18,7 +18,7 @@
 		<form action="provideDegreesChooseLocation.jsp">
 			US Permanent Resident <input type="radio" name="residencyStatus" value="US Permanent Resident"/>
 			<br> Non-Resident <input type="radio" name="residencyStatus" value="Non-Resident"/>
-			<input type="submit" value="Submit"/>
+			<br><input type="submit" value="Submit"/>
 		</form>
 	</body>
 </html>
