@@ -7,13 +7,21 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>More Degrees</title>
 	<% 
-		int i = 0; //iterator for setting attributes
-		int j = 0; //iterator for printing attributes
-		String chosenUniversity; //the chosen university
-		String submittedDegree; //the submitted degree
-		Integer chosenCountryOrStateId; 
+		int i = 0; // iterator for setting attributes
+		String chosenUniversity; // the chosen university
+		String submittedDegree; // the submitted degree all in one string
+		String submittedDegreeLocation; // the submitted degree location
+		String submittedDegreeUniversity; // university of the submitted degree
+		String submittedDegreeName; // name of the submitted degree
+		String submittedDegreeTitle; // title of the submitted degree
+		String submittedDegreeMonth; // month degree was awarded
+		String submittedDegreeYear; // year degree was awarded
+		String submittedDegreeGpa; // GPA achieved in degree
+		
+		Integer chosenCountryOrStateId;
 		Integer chosenUniversityId;
 		String chosenDegree;
+		
 		chosenCountryOrStateId = (Integer)session.getAttribute("chosenCountryOrStateId");
 		chosenUniversityId = (Integer)session.getAttribute("chosenUniversityId");
            //create a new country or state.
@@ -37,32 +45,41 @@
 		}
 			 
 		if (request.getParameter("newDegree") == "") {
-			chosenDegree= request.getParameter("degree"); //If parameter is old degree
+			chosenDegree = request.getParameter("radios"); //If parameter is existing degree
 		} else {
-			chosenDegree=request.getParameter("newDegree"); // if the user set his own degree
+			chosenDegree = request.getParameter("newDegree"); // if the user set his own degree
 		}
 		
-		submittedDegree = countryOrState+" "+chosenUniversity+" "+" "+ chosenDegree+" "+request.getParameter("radios")+" "+request.getParameter("month/year")+" "+"GPA/expectedGPA: "+request.getParameter("GPA/expectedGPA");
+		
+		submittedDegreeLocation = countryOrState;
+		submittedDegreeUniversity = chosenUniversity;
+		submittedDegreeName = chosenDegree;
+		submittedDegreeTitle = request.getParameter("degree");
+		submittedDegreeMonth = request.getParameter("month");
+		submittedDegreeYear = request.getParameter("year");
+		submittedDegreeGpa = request.getParameter("gpa");
+		submittedDegree = countryOrState + " " + chosenUniversity + " " + chosenDegree + " " 
+				  + submittedDegreeMonth + " " + submittedDegreeYear + " " + submittedDegreeGpa + " " 
+				  + submittedDegreeTitle;
+		
 		session.setAttribute("submittedDegree"+ Integer.toString(i), submittedDegree);
+		session.setAttribute("submittedDegreeLocation"+ Integer.toString(i), submittedDegreeLocation);
+		session.setAttribute("submittedDegreeUniversity"+ Integer.toString(i), submittedDegreeUniversity);
+		session.setAttribute("submittedDegreeName"+ Integer.toString(i), submittedDegreeName);
+		session.setAttribute("submittedDegreeTitle"+ Integer.toString(i), submittedDegreeTitle);
+		session.setAttribute("submittedDegreeMonth"+ Integer.toString(i), submittedDegreeMonth);
+		session.setAttribute("submittedDegreeYear"+ Integer.toString(i), submittedDegreeYear);
+		session.setAttribute("submittedDegreeGpa"+ Integer.toString(i), submittedDegreeGpa);
 	%>
 </head>
 <body>
-    <!-- Loop through all the submitted degree attributes, printing them out. -->
-	<%
-		while(session.getAttribute("submittedDegree"+ Integer.toString(j)) != null)
-		{
-			out.println( (String)session.getAttribute("submittedDegree"+ Integer.toString(j)));
-			j++;
-	%>
-		 <br>
-	<%  } 	%>
+    <%@ include file="printDegrees.jsp" %>
 	
-	<form action="provideDegreesChooseLocation.jsp">
-		<input type= "submit" value="Submit Next Degree"/>
-	</form>
-	
-	<form action="specialization.jsp">
-		<input type= "submit" value="Done"/>
-	</form>
+	<button onclick="window.location='provideDegreesChooseLocation.jsp'">
+		Submit Next Degree
+	</button>
+	<button onclick="window.location='specialization.jsp'">
+		Done
+	</button>
 </body>
 </html>

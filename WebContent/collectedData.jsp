@@ -76,5 +76,7 @@
 		<% if (residencyStatus != null) { %>
 			<p> <b>Residency Status </b> <%= residencyStatus %> </p>
 		<% } %>
+		
+		<%@ include file="printDegrees.jsp" %>
 	</body>
 </html>

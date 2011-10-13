@@ -8,7 +8,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>Provide Degrees - Choose University</title>
-		<!-- Set the attribute for chosencountryorstate id and
+		<!-- Set the attribute for chosen Country or State id and
 		   Get the university list for that chosen country or state  -->
 			<% 
 			
@@ -21,29 +21,26 @@
 			Vector universityList = (Vector)tuple.get(1);
 			
 			%>
-</head>
-<body>
-<h3>Provide Degrees - Choose University</h3>
-<!-- print out a 3-column table of all the universities for that chosen country or state
-	Provide an option for the user to add his or her own university.
- -->
-<form action= "provideDegreesChooseDiscipline.jsp?chosenUniversityId=<%= universityList.size() %>" method="POST">
-	Don't see your university? Enter here:  <input type="text" size="10" name="newUniversity"/>
-	<input type= "submit" value="Submit"/>
-</form>
-               <table>
+	</head>
+	<body>
+		<h3>Provide Degrees - Choose University</h3>
+		<!-- print out a 3-column table of all the universities for that chosen country or state
+			Provide an option for the user to add his or her own university.
+		-->
+		<form action= "provideDegreesChooseDiscipline.jsp?chosenUniversityId=<%= universityList.size() %>" method="POST">
+			Don't see your university? Enter here:  <input type="text" size="10" name="newUniversity"/>
+			<input type= "submit" value="Submit"/>
+		</form>
+		<table>
 			<tr>
 			<%for (int i = 0; i < universityList.size(); i++) {
-			   
 				if (i % 3 == 0 && i > 0) {
-					%>
+			%>
 					</tr><tr>
 				<% } %>
 				<td><a href = "provideDegreesChooseDiscipline.jsp?chosenUniversityId=<%= i %>"> <%= (String)universityList.get(i) %> </a></td>
 			<% } %>
 			</tr>
 		</table>
-		
 	</body>
-</body>
 </html>

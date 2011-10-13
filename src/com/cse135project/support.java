@@ -19,7 +19,7 @@ public class support{
 
     //the logic for majors and specs are exactly
     //the same as for countries so just reuse the class
-    public Vector getMajors(String path){
+    public Vector<String> getMajors(String path){
 	        countries m = new countries();
 	        return m.getVector(path);
     }
@@ -54,7 +54,7 @@ class countries{
 }
 
 class universities{
-    Vector v = new Vector();
+	Vector v = new Vector<Vector<Vector<String>>>();
 
     public Vector getVector(String path){
         if(v.isEmpty())
@@ -71,7 +71,7 @@ class universities{
             BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(path)));
             String line = "";
             Vector tuple = new Vector();
-            Vector univ = new Vector();
+            Vector univ = new Vector<String>();
             while((line = br.readLine()) != null) {
                 //if we hit a blank line
                 if(line.trim().length() == 0){
