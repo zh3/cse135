@@ -4,3 +4,7 @@ Collaborators:
 James Carrier (jpcarrier@aol.com)
 Zhanzhan He (z6he@ucsd.edu)
 
+Overview:
+All Custom java classes under src/
+JSP files under WebContent/
+text information support files under WebContent/txtdata
