@@ -17,10 +17,21 @@
 		String submittedDegreeMonth; // month degree was awarded
 		String submittedDegreeYear; // year degree was awarded
 		String submittedDegreeGpa; // GPA achieved in degree
+		Degree degree; // Current degree to be created with existing information
+		Vector<Degree> degreeVector;
 		
 		Integer chosenCountryOrStateId;
 		Integer chosenUniversityId;
 		String chosenDegree;
+		
+		// Create Degree Vector if it doesn't exist already
+		if (session.getAttribute("degreeVector") == null) {
+			session.setAttribute("degreeVector", new Vector<Degree>());
+		}
+		
+		// Get degree vector
+		degreeVector = (Vector<Degree>) session.getAttribute("degreeVector");
+		
 		
 		chosenCountryOrStateId = (Integer)session.getAttribute("chosenCountryOrStateId");
 		chosenUniversityId = (Integer)session.getAttribute("chosenUniversityId");
@@ -58,18 +69,10 @@
 		submittedDegreeMonth = request.getParameter("month");
 		submittedDegreeYear = request.getParameter("year");
 		submittedDegreeGpa = request.getParameter("gpa");
-		submittedDegree = countryOrState + " " + chosenUniversity + " " + chosenDegree + " " 
-				  + submittedDegreeMonth + " " + submittedDegreeYear + " " + submittedDegreeGpa + " " 
-				  + submittedDegreeTitle;
-		
-		session.setAttribute("submittedDegree"+ Integer.toString(i), submittedDegree);
-		session.setAttribute("submittedDegreeLocation"+ Integer.toString(i), submittedDegreeLocation);
-		session.setAttribute("submittedDegreeUniversity"+ Integer.toString(i), submittedDegreeUniversity);
-		session.setAttribute("submittedDegreeName"+ Integer.toString(i), submittedDegreeName);
-		session.setAttribute("submittedDegreeTitle"+ Integer.toString(i), submittedDegreeTitle);
-		session.setAttribute("submittedDegreeMonth"+ Integer.toString(i), submittedDegreeMonth);
-		session.setAttribute("submittedDegreeYear"+ Integer.toString(i), submittedDegreeYear);
-		session.setAttribute("submittedDegreeGpa"+ Integer.toString(i), submittedDegreeGpa);
+
+		degree = new Degree(submittedDegreeLocation, submittedDegreeUniversity, submittedDegreeName, submittedDegreeTitle,
+							submittedDegreeMonth, submittedDegreeYear, submittedDegreeGpa);
+		degreeVector.add(degree);
 	%>
 </head>
 <body>
