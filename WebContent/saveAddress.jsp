@@ -13,6 +13,11 @@
 				currentSession.setAttribute("countryCode", request.getParameter("countryCode"));
 				currentSession.setAttribute("areaCode", request.getParameter("areaCode"));
 				currentSession.setAttribute("telNumber", request.getParameter("telNumber"));
+				currentSession.setAttribute("addressSaved", new Boolean(true));
+			}
+		
+			boolean isAddressSaved(HttpSession currentSession) {
+				return (currentSession.getAttribute("addressSaved") != null);
 			}
 		%>
 	</head>

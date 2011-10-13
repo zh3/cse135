@@ -8,7 +8,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>Provide Degrees - Choose Location</title>
-		<!-- get universities vector and sett attribute resstatus  -->
+		<!-- get universities vector and set attribute residencyStatus  -->
 		
 		<%
 			String resStatus = request.getParameter("residencyStatus");
@@ -19,10 +19,8 @@
 		
 			
 			
-			// Only save address if there is no residency status information
-			// as address has already been saved by another page if this
-			// information exists
-			if (resStatus == null) {
+			// Only save address if it hasn't already been done by another page
+			if (!isAddressSaved(session)) {
 				saveAddress(session, request);
 			}
 		%>
