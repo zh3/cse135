@@ -30,6 +30,7 @@
 			String telNumber = (String) session.getAttribute("telNumber");
 			
 			String residencyStatus = (String) session.getAttribute("residencyStatus");
+			String specialization = (String) session.getAttribute("specialization");
 		%>
 		
 		<h3>Your Application Summary</h3>
@@ -78,5 +79,9 @@
 		<% } %>
 		
 		<%@ include file="printDegrees.jsp" %>
+		
+		<% if (specialization != null) { %>
+			<p> <b>Specialization </b> <%= specialization %> </p>
+		<% } %>
 	</body>
 </html>

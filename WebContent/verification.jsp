@@ -5,6 +5,10 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>Verification</title>
+		<%
+			String specializationParam = request.getParameter("specialization");
+			session.setAttribute("specialization", specializationParam);
+		%>
 	</head>
 	<body>
 		<h3>Verification</h3>
