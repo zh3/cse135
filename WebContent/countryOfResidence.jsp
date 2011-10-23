@@ -1,3 +1,4 @@
+<%@ include file="DBConnect.jsp" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -6,6 +7,9 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>Country of Residence</title>
 		<%
+			Connection db = dbConnect();
+	
+	        Statement sql = db.createStatement();
 			support s = new support();
 			String countriesPath = config.getServletContext().getRealPath("txtdata/countries.txt");
 			Vector<String> countries = s.getCountries(countriesPath);
@@ -28,17 +32,26 @@
 		<br><br>
 		
 		<!-- 
-			Generate table of hyperlinks which invoke country of residence page with selected country's index in
-			the vector as an id.
+			Generate table of hyperlinks which invoke country of residence page with selected country's id in
+			the database as an id.
 		-->
+		
 		<table>
 			<tr>
-			<%for (int i = 0; i < countries.size(); i++) { %>
-				<% if (i % 3 == 0 && i > 0) { %>
-					</tr><tr>
-				<% } %>
-				<td><a href = "address.jsp?countryOfResidenceId=<%= i %>"> <%= countries.get(i) %> </a></td>
-			<% } %>
+			<% 
+				ResultSet rset = sql.executeQuery("SELECT * FROM countries");
+				
+				int i = 0;
+	            while (rset.next()) {
+	        %>
+	        		<% if (i % 3 == 0 && i > 0) { %>
+						</tr><tr>
+					<% } %>
+					<td><a href = "address.jsp?countryOfResidenceId=<%= rset.getInt(1) %>"> <%= rset.getString(2) %> </a></td>
+	        <% 		
+	        		i++;
+	           } 
+	        %>
 			</tr>
 		</table>
 	</body>

@@ -1,4 +1,3 @@
-<%@page import="com.cse135project.*, java.util.*, java.sql.*" %>
 <%@ include file="DBConnect.jsp" %>
 
 <html>
@@ -22,8 +21,8 @@
 		<h3> Select your country of citizenship </h3>
 		
 		<!-- 
-			Generate table of hyperlinks which invoke country of residence page with selected country's index in
-			the vector as an id.
+			Generate table of hyperlinks which invoke country of residence page with selected country's id in
+			the database as an identifier.
 		-->
 		<table>
 			<tr>
