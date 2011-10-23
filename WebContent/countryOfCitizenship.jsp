@@ -1,9 +1,15 @@
-<%@page import="com.cse135project.*, java.util.*" %>
+<%@page import="com.cse135project.*, java.util.*, java.sql.*" %>
+<%@ include file="DBConnect.jsp" %>
 
 <html>
 	<head>
 		<title>Country of Citizenship</title>
 		<%
+			Connection db = dbConnect();
+
+            Statement sql = db.createStatement();
+            
+			
 			support s = new support();
 			String countriesPath = config.getServletContext().getRealPath("txtdata/countries.txt");
 			Vector<String> countries = s.getCountries(countriesPath);
@@ -26,12 +32,20 @@
 		-->
 		<table>
 			<tr>
-			<%for (int i = 0; i < countries.size(); i++) { %>
-				<% if (i % 3 == 0 && i > 0) { %>
-					</tr><tr>
-				<% } %>
-				<td><a href = "countryOfResidence.jsp?countryOfCitizenshipId=<%= i %>"> <%= countries.get(i) %> </a></td>
-			<% } %>
+			<% 
+				ResultSet rset = sql.executeQuery("SELECT * FROM countries");
+				
+				int i = 0;
+	            while (rset.next()) {
+	        %>
+	        		<% if (i % 3 == 0 && i > 0) { %>
+						</tr><tr>
+					<% } %>
+					<td><a href = "countryOfResidence.jsp?countryOfCitizenshipId=<%= rset.getInt(1) %>"> <%= rset.getString(2) %> </a></td>
+	        <% 		
+	        		i++;
+	           } 
+	        %>
 			</tr>
 		</table>
 	</body>
