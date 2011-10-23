@@ -35,7 +35,12 @@
 			<input type="radio" name="disciplineId" value="<%= rset.getInt(1) %>" >
 			<%= rset.getString(2) %>
 			<br>
-		<%} %>
+		<%} 
+		
+			sql.close();
+			rset.close();
+			db.close();
+		%>
 			<br> Don't see your degree? Enter here:  <input type="text" size="10" name="newDegree"/>
 			<br> Date of Award:  
 			<input type="text" size="2" name="month" value="mm"/>

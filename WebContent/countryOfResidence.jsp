@@ -48,6 +48,10 @@
 	        <% 		
 	        		i++;
 	           } 
+	            
+	            rset.close();
+	            sql.close();
+	            db.close();
 	        %>
 			</tr>
 		</table>

@@ -43,6 +43,7 @@
 			pstmt.setString(1, chosenUniversityLocation);
 			pstmt.setString(2, chosenUniversityName);
 			pstmt.executeUpdate();
+			pstmt.close();
 			
 			// Get the ID of the new entry
 			pstmt = db.prepareStatement("SELECT id FROM universities WHERE location = ? AND name = ?");
@@ -53,6 +54,9 @@
 			if (rset.next()) {
 				submittedDegreeUniversityId = rset.getInt(1);
 			}
+			
+			rset.close();
+			pstmt.close();
 		}
 			 
 		if (request.getParameter("newDegree") == "") {
@@ -74,6 +78,9 @@
 			if (rset.next()) {
 				submittedDegreeDisciplineId = rset.getInt(1);
 			}
+			
+			pstmt.close();
+			rset.close();
 		}
 		
 		submittedDegreeTitle = request.getParameter("degree");
@@ -84,6 +91,8 @@
 		degree = new Degree(submittedDegreeUniversityId, submittedDegreeDisciplineId, submittedDegreeTitle,
 							submittedDegreeMonth, submittedDegreeYear, submittedDegreeGpa);
 		degreeVector.add(degree);
+		
+		db.close();
 	%>
 </head>
 <body>

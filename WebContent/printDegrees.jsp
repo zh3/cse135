@@ -68,6 +68,8 @@
 				
 				
 			}
+		
+			database.close();
 		%>
 	</body>
 </html>
