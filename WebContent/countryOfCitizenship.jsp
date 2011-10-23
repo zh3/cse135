@@ -8,11 +8,6 @@
 			Connection db = dbConnect();
 
             Statement sql = db.createStatement();
-            
-			
-			support s = new support();
-			String countriesPath = config.getServletContext().getRealPath("txtdata/countries.txt");
-			Vector<String> countries = s.getCountries(countriesPath);
 		
 			session.setAttribute("firstName", request.getParameter("firstName"));
 			session.setAttribute("middleInitial", request.getParameter("middleInitial"));
