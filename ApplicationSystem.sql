@@ -3804,4 +3804,4 @@ INSERT INTO disciplines (name) VALUES ('Computer Engineering');
 INSERT INTO disciplines (name) VALUES ('Computer Science - Bionformatics');
 INSERT INTO disciplines (name) VALUES ('Electrical Engineering');
 
-select * from disciplines;
+select * from universities where location = 'Alabama';

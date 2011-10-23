@@ -16,8 +16,18 @@
 				currentSession.setAttribute("addressSaved", new Boolean(true));
 			}
 		
+			void saveResidency(HttpSession currentSession, HttpServletRequest request) {
+				String resStatus = request.getParameter("residencyStatus");
+				currentSession.setAttribute("residencyStatus", resStatus);
+				currentSession.setAttribute("residencySaved", new Boolean(true));
+			}
+		
 			boolean isAddressSaved(HttpSession currentSession) {
 				return (currentSession.getAttribute("addressSaved") != null);
+			}
+			
+			boolean isResidencySaved(HttpSession currentSession) {
+				return (currentSession.getAttribute("residencySaved") != null);
 			}
 		%>
 	</head>

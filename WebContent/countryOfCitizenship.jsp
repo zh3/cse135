@@ -1,10 +1,10 @@
-<%@ include file="DBConnect.jsp" %>
+<%@page import="com.cse135project.*, java.util.*, java.sql.*" %>
 
 <html>
 	<head>
 		<title>Country of Citizenship</title>
 		<%
-			Connection db = dbConnect();
+			Connection db = DBConnection.dbConnect();
 
             Statement sql = db.createStatement();
 		

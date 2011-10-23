@@ -7,28 +7,23 @@ package com.cse135project;
  *
  */
 public class Degree {
-	public Degree(String degreeLocation, String degreeUniversity,
-			String degreeName, String degreeTitle, String degreeMonth, 
+	public Degree(Integer degreeUniversityId, Integer degreeDisciplineId, 
+			String degreeTitle, String degreeMonth, 
 			String degreeYear, String degreeGpa) {
-		location = degreeLocation;
-		university = degreeUniversity;
-		name = degreeName;
+		universityId = degreeUniversityId;
+		disciplineId = degreeDisciplineId;
 		title = degreeTitle;
 		month = degreeMonth;
 		year = degreeYear;
 		gpa = degreeGpa;
 	}
 	
-	public String getLocation() {
-		return location;
+	public Integer getUniversityId() {
+		return universityId;
 	}
 	
-	public String getUniversity() {
-		return university;
-	}
-	
-	public String getName() {
-		return name;
+	public Integer getDisciplineId() {
+		return disciplineId;
 	}
 	
 	public String getTitle() {
@@ -47,11 +42,10 @@ public class Degree {
 		return gpa;
 	}
 	
-	String location;
-	String university;
-	String name;
-	String title;
-	String month;
-	String year;
-	String gpa;
+	private Integer universityId;
+	private Integer disciplineId;
+	private String title;
+	private String month;
+	private String year;
+	private String gpa;
 }

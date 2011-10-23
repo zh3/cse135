@@ -1,4 +1,4 @@
-<%@page import="com.cse135project.*, java.util.*" %>
+<%@page import="com.cse135project.*, java.util.*, java.sql.*" %>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -7,13 +7,11 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>Choose Discipline</title>
-		<!-- Get the majors vector and set the chosuniversityid attribute -->
+		<!-- Get the majors vector and set the chosenUniversityid attribute -->
 		<%
-			support s = new support();
-			String majorsPath = config.getServletContext().getRealPath("txtdata/majors.txt");
-			Vector majors = s.getMajors(majorsPath);
-					
+			Connection db = DBConnection.dbConnect();
 			String newUniversity = request.getParameter("newUniversity");
+			String newUniversityLocation = request.getParameter("newUniversityLocation");
 					 
 			Integer chosenUniversityId = Integer.parseInt(request.getParameter("chosenUniversityId"));
 					
@@ -27,11 +25,16 @@
 		<!-- Loop through the majors vector, making radio buttons for each major -->
 		
 		<form name="myform" action= "moreDegrees.jsp" method="GET">
-			<input type="hidden" name="newUniversity" value="<%=newUniversity %>"/>
-		<%for (int i = 0; i < majors.size(); i++) { %>
-			<INPUT TYPE="radio" NAME="radios" VALUE="<%=majors.get(i)%>" >
-			<%= majors.get(i) %>
-			<BR>
+			<input type="hidden" name="newUniversity" value="<%= newUniversity %>"/>
+			<input type="hidden" name="newUniversityLocation" value="<%= newUniversityLocation %>"/>
+		<% 
+			Statement sql = db.createStatement();
+			ResultSet rset = sql.executeQuery("SELECT * FROM disciplines");
+		%>
+		<% while (rset.next()) { %>
+			<input type="radio" name="disciplineId" value="<%= rset.getInt(1) %>" >
+			<%= rset.getString(2) %>
+			<br>
 		<%} %>
 			<br> Don't see your degree? Enter here:  <input type="text" size="10" name="newDegree"/>
 			<br> Date of Award:  

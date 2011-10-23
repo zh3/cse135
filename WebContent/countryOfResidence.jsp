@@ -1,4 +1,4 @@
-<%@ include file="DBConnect.jsp" %>
+<%@page import="com.cse135project.*, java.util.*, java.sql.*" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -7,12 +7,9 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>Country of Residence</title>
 		<%
-			Connection db = dbConnect();
+			Connection db = DBConnection.dbConnect();
 	
 	        Statement sql = db.createStatement();
-			support s = new support();
-			String countriesPath = config.getServletContext().getRealPath("txtdata/countries.txt");
-			Vector<String> countries = s.getCountries(countriesPath);
 		
 			Integer countryOfCitizenshipId = Integer.parseInt(request.getParameter("countryOfCitizenshipId"));
 			session.setAttribute("countryOfCitizenshipId", countryOfCitizenshipId);

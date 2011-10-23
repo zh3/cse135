@@ -1,4 +1,4 @@
-<%@page import="com.cse135project.*, java.util.*" %>
+<%@page import="com.cse135project.*" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
@@ -10,9 +10,9 @@
 	</head>
 	<body>
 		<% 
+			Connection dbs = DBConnection.dbConnect();
 			support supp = new support();
 			String cPath = config.getServletContext().getRealPath("txtdata/countries.txt");
-			Vector<String> countriesVector = supp.getCountries(cPath);
 		
 			String firstName = (String) session.getAttribute("firstName"); 
 			String middleInitial = (String) session.getAttribute("middleInitial");
@@ -31,6 +31,37 @@
 			
 			String residencyStatus = (String) session.getAttribute("residencyStatus");
 			String specialization = (String) session.getAttribute("specialization");
+			
+			String countryOfCitizenship = null;
+			String countryOfResidence = null;
+			
+			if (countryCitizenshipId != null) {
+				PreparedStatement pstatement = dbs.prepareStatement("SELECT name from countries WHERE id = ?");
+				pstatement.setInt(1, countryCitizenshipId);
+				ResultSet resSet = pstatement.executeQuery();
+				
+				countryOfCitizenship = "";
+				if (resSet.next()) {
+					countryOfCitizenship = resSet.getString(1);
+				}
+				
+				resSet.close();
+				pstatement.close();
+			}
+			
+			if (countryResidenceId != null) {
+				PreparedStatement pstatement = dbs.prepareStatement("SELECT name FROM countries WHERE id = ?");
+				pstatement.setInt(1, countryResidenceId);
+				ResultSet resSet = pstatement.executeQuery();
+				
+				countryOfResidence = "";
+				if (resSet.next()) {
+					countryOfResidence = resSet.getString(1);
+				}
+				
+				resSet.close();
+				pstatement.close();
+			}
 		%>
 		
 		<h3>Your Application Summary</h3>
@@ -38,12 +69,12 @@
 			<p> <b>Name </b> <%= firstName + " " + middleInitial + " " + lastName %> </p>
 		<% } %>
 		
-		<% if (countryCitizenshipId != null) { %>
-			<p> <b>Country of Citizenship </b> <%= countriesVector.get(countryCitizenshipId) %> </p>
+		<% if (countryOfCitizenship != null) { %>
+			<p> <b>Country of Citizenship </b> <%= countryOfCitizenship %> </p>
 		<% } %>
 		
-		<% if (countryResidenceId != null) { %>
-			<p> <b>Country of Residence </b> <%= countriesVector.get(countryResidenceId) %> </p>
+		<% if (countryOfResidence != null) { %>
+			<p> <b>Country of Residence </b> <%= countryOfResidence %> </p>
 		<% } %>
 		
 		<% if (streetAddress != null) { %>
@@ -83,5 +114,9 @@
 		<% if (specialization != null) { %>
 			<p> <b>Specialization </b> <%= specialization %> </p>
 		<% } %>
+		
+		<%
+			dbs.close();
+		%>
 	</body>
 </html>

@@ -1,3 +1,4 @@
+<%@page import="com.cse135project.*, java.util.*, java.sql.*" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -9,10 +10,18 @@
 			boolean isUSCitizen;
 			boolean isUSResident;
 		
-			support s = new support();
-			String countriesPath = config.getServletContext().getRealPath("txtdata/countries.txt");
-			Vector<String> countries = s.getCountries(countriesPath);
-			Integer unitedStatesId = countries.indexOf("United States");
+			Connection db = DBConnection.dbConnect();
+			Statement s = db.createStatement();
+			ResultSet rs = s.executeQuery("SELECT id FROM countries WHERE name = 'United States'");
+			Integer unitedStatesId = -10;
+			if (rs.next()) {
+				unitedStatesId = rs.getInt(1);
+			}
+			
+			rs.close();
+			s.close();
+			db.close();
+			
 			Integer countryOfResidenceId = Integer.parseInt(request.getParameter("countryOfResidenceId"));
 			session.setAttribute("countryOfResidenceId", countryOfResidenceId);
 			

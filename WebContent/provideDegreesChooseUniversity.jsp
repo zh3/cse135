@@ -1,5 +1,4 @@
-<%@page import="com.cse135project.*, java.util.*" %>
-
+<%@page import="com.cse135project.*, java.util.*, java.sql.*" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
@@ -11,35 +10,43 @@
 		<!-- Set the attribute for chosen Country or State id and
 		   Get the university list for that chosen country or state  -->
 			<% 
-			
-			Integer chosenCountryOrStateId = Integer.parseInt(request.getParameter("chosenCountryOrStateId"));
-			session.setAttribute("chosenCountryOrStateId", chosenCountryOrStateId);
-			support s = new support();
-			String universitiesPath = config.getServletContext().getRealPath("txtdata/universities.txt");
-			Vector universities = s.getUniversities(universitiesPath);
-			Vector tuple = (Vector)universities.get(chosenCountryOrStateId);
-			Vector universityList = (Vector)tuple.get(1);
-			
+				Connection db = DBConnection.dbConnect();
+				String location = request.getParameter("chosenCountryOrState");
 			%>
 	</head>
 	<body>
 		<h3>Provide Degrees - Choose University</h3>
-		<!-- print out a 3-column table of all the universities for that chosen country or state
-			Provide an option for the user to add his or her own university.
-		-->
-		<form action= "provideDegreesChooseDiscipline.jsp?chosenUniversityId=<%= universityList.size() %>" method="POST">
+		<!-- Provide an option for the user to add his or her own university. -->
+		 
+		<form action= "provideDegreesChooseDiscipline.jsp?chosenUniversityId=<%= -1/*universityList.size()*/ %>" method="POST">
 			Don't see your university? Enter here:  <input type="text" size="10" name="newUniversity"/>
+			<input type="hidden" name="newUniversityLocation" value="<%=location %>"/>
 			<input type= "submit" value="Submit"/>
 		</form>
+
+		<!-- print out a 3-column table of all the universities for that chosen country or state -->
 		<table>
 			<tr>
-			<%for (int i = 0; i < universityList.size(); i++) {
-				if (i % 3 == 0 && i > 0) {
-			%>
-					</tr><tr>
-				<% } %>
-				<td><a href = "provideDegreesChooseDiscipline.jsp?chosenUniversityId=<%= i %>"> <%= (String)universityList.get(i) %> </a></td>
-			<% } %>
+			<% 
+				PreparedStatement sql = db.prepareStatement("SELECT id, name FROM universities where location = ?");
+				sql.setString(1, location);
+				ResultSet rset = sql.executeQuery();
+			
+				int i = 0;
+	            while (rset.next()) {
+	        %>
+	        		<% if (i % 3 == 0 && i > 0) { %>
+						</tr><tr>
+					<% } %>
+					<td>
+						<a href = "provideDegreesChooseDiscipline.jsp?chosenUniversityId=<%= rset.getInt(1) %>"> 
+							<%= rset.getString(2) %> 
+						</a>
+					</td>
+	        <% 		
+	        		i++;
+	           } 
+	        %>
 			</tr>
 		</table>
 	</body>
