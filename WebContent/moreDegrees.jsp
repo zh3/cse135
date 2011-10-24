@@ -13,8 +13,8 @@
 		Integer submittedDegreeUniversityId; // university of the submitted degree
 		Integer submittedDegreeDisciplineId = 0; // name of the submitted degree
 		String submittedDegreeTitle; // title of the submitted degree
-		String submittedDegreeMonth; // month degree was awarded
-		String submittedDegreeYear; // year degree was awarded
+		Integer submittedDegreeMonth; // month degree was awarded
+		Integer submittedDegreeYear; // year degree was awarded
 		Float submittedDegreeGpa; // GPA achieved in degree
 		Degree degree; // Current degree to be created with existing information
 		Vector<Degree> degreeVector;
@@ -84,8 +84,8 @@
 		}
 		
 		submittedDegreeTitle = request.getParameter("degree");
-		submittedDegreeMonth = request.getParameter("month");
-		submittedDegreeYear = request.getParameter("year");
+		submittedDegreeMonth = Integer.parseInt(request.getParameter("month"));
+		submittedDegreeYear = Integer.parseInt(request.getParameter("year"));
 		submittedDegreeGpa = Float.parseFloat(request.getParameter("gpa"));
 
 		degree = new Degree(submittedDegreeUniversityId, submittedDegreeDisciplineId, submittedDegreeTitle,

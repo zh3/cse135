@@ -58,7 +58,7 @@
 						<b> Degree</b> <%= disciplineName %>
 						<br> <b>University</b> <%= universityName %>
 						<br> <b>Location</b> <%= locationName %>
-						<br> <b>Degree Award Date</b>  <%= d.getMonth()+ "-" + d.getYear() %>
+						<br> <b>Degree Award Date</b>  <%= d.getMonth().toString() + "-" + d.getYear() %>
 						<br> <b>Degree Title</b>  <%= d.getTitle() %>
 						<br> <b>GPA / Expected GPA</b> <%= d.getGpa() %>
 					</div>

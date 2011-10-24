@@ -8,8 +8,8 @@ package com.cse135project;
  */
 public class Degree {
 	public Degree(Integer degreeUniversityId, Integer degreeDisciplineId, 
-			String degreeTitle, String degreeMonth, 
-			String degreeYear, Float degreeGpa) {
+			String degreeTitle, Integer degreeMonth, 
+			Integer degreeYear, Float degreeGpa) {
 		universityId = degreeUniversityId;
 		disciplineId = degreeDisciplineId;
 		title = degreeTitle;
@@ -30,11 +30,11 @@ public class Degree {
 		return title;
 	}
 	
-	public String getMonth() {
+	public Integer getMonth() {
 		return month;
 	}
 	
-	public String getYear() {
+	public Integer getYear() {
 		return year;
 	}
 	
@@ -45,7 +45,7 @@ public class Degree {
 	private Integer universityId;
 	private Integer disciplineId;
 	private String title;
-	private String month;
-	private String year;
+	private Integer month;
+	private Integer year;
 	private Float gpa;
 }
