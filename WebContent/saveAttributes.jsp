@@ -10,7 +10,9 @@
 				currentSession.setAttribute("city", request.getParameter("city"));
 				currentSession.setAttribute("state", request.getParameter("state"));
 				currentSession.setAttribute("zipCode", request.getParameter("zipCode"));
-				currentSession.setAttribute("countryCode", Integer.parseInt(request.getParameter("countryCode")));
+				if (request.getParameter("countryCode") != null) {
+					currentSession.setAttribute("countryCode", Integer.parseInt(request.getParameter("countryCode")));
+				}
 				currentSession.setAttribute("areaCode", Integer.parseInt(request.getParameter("areaCode")));
 				currentSession.setAttribute("telNumber", Integer.parseInt(request.getParameter("telNumber")));
 				currentSession.setAttribute("addressSaved", new Boolean(true));

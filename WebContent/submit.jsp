@@ -44,7 +44,11 @@
 			ps.setString(6, (String) session.getAttribute("state"));
 			ps.setString(7, (String) session.getAttribute("zipCode"));
 			
-			ps.setInt(8, (Integer) session.getAttribute("countryCode"));
+			if (session.getAttribute("countryCode") != null) {
+				ps.setInt(8, (Integer) session.getAttribute("countryCode"));
+			} else {
+				ps.setNull(8, Types.INTEGER);
+			}
 			ps.setInt(9, (Integer) session.getAttribute("areaCode"));
 			ps.setInt(10, (Integer) session.getAttribute("telNumber"));
 			
