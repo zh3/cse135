@@ -35,7 +35,7 @@ CREATE TABLE applicants (
 	streetAddress TEXT NOT NULL,
 	city TEXT NOT NULL,
 	state TEXT, -- Only US Residents need to enter state
-	zipCode INTEGER NOT NULL,
+	zipCode TEXT NOT NULL,
 
 	countryCode INTEGER, -- Only Non US Residents need to enter country code
 	areaCode INTEGER NOT NULL,
@@ -55,7 +55,7 @@ CREATE TABLE degrees (
 	title TEXT NOT NULL,
 	university INTEGER REFERENCES universities (ID) NOT NULL,
 	discipline INTEGER REFERENCES disciplines (ID) NOT NULL,
-	gpa INTEGER NOT NULL
+	gpa FLOAT NOT NULL
 );
 
 
@@ -3804,4 +3804,4 @@ INSERT INTO disciplines (name) VALUES ('Computer Engineering');
 INSERT INTO disciplines (name) VALUES ('Computer Science - Bionformatics');
 INSERT INTO disciplines (name) VALUES ('Electrical Engineering');
 
-select * from universities where location = 'Alabama';
+SELECT * FROM applicants;

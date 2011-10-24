@@ -1,4 +1,4 @@
-<%@page import="com.cse135project.*, java.util.*" %>
+<%@page import="com.cse135project.*, java.sql.*" %>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -11,20 +11,27 @@
 	<body>
 		<h3> Choose Specialization </h3>
 		<%
-			support supp = new support();
-			String cPath = config.getServletContext().getRealPath("txtdata/specializations.txt");
-			Vector<String> specializations = supp.getSpecializations(cPath);
+			Connection db = DBConnection.dbConnect();
+		
+			Statement sql = db.createStatement();
+			
+			ResultSet result = sql.executeQuery("SELECT * FROM specializations");
 		%>
 		
 		<form action="verification.jsp" method="GET">
 			<select name="specialization">
 				<% 
-					for (int i = 0; i < specializations.size(); i++) {
+					while (result.next()) {
 				%>
-						<option value="<%= specializations.get(i) %>">
-							<%= specializations.get(i) %>
+						<option value="<%= result.getInt(1) %>">
+							<%= result.getString(2) %>
 						</option>
-				<%  } %>
+				<%  } 
+					
+					result.close();
+					sql.close();
+					db.close();
+				%>
 			</select>
 			<input type="submit" value="Submit" />
 		</form>

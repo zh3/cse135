@@ -25,15 +25,30 @@
 			String city = (String) session.getAttribute("city");
 			String state = (String) session.getAttribute("state");
 			String zipCode = (String) session.getAttribute("zipCode");
-			String countryCode = (String) session.getAttribute("countryCode");
-			String areaCode = (String) session.getAttribute("areaCode");
-			String telNumber = (String) session.getAttribute("telNumber");
+			Integer countryCode = (Integer) session.getAttribute("countryCode");
+			Integer areaCode = (Integer) session.getAttribute("areaCode");
+			Integer telNumber = (Integer) session.getAttribute("telNumber");
 			
 			String residencyStatus = (String) session.getAttribute("residencyStatus");
-			String specialization = (String) session.getAttribute("specialization");
+			Integer specializationId = (Integer) session.getAttribute("specialization");
 			
 			String countryOfCitizenship = null;
 			String countryOfResidence = null;
+			String specialization = null;
+			
+			if (specializationId != null) {
+				PreparedStatement pstatement = dbs.prepareStatement("SELECT name from specializations WHERE id = ?");
+				pstatement.setInt(1, specializationId);
+				ResultSet resSet = pstatement.executeQuery();
+				
+				specialization = "";
+				if (resSet.next()) {
+					specialization = resSet.getString(1);
+				}
+				
+				resSet.close();
+				pstatement.close();
+			}
 			
 			if (countryCitizenshipId != null) {
 				PreparedStatement pstatement = dbs.prepareStatement("SELECT name from countries WHERE id = ?");

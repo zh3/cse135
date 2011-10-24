@@ -8,7 +8,7 @@
 		<title>Verification</title>
 		<%
 			String specializationParam = request.getParameter("specialization");
-			session.setAttribute("specialization", specializationParam);
+			session.setAttribute("specialization", Integer.parseInt(specializationParam));
 		%>
 	</head>
 	<body>
