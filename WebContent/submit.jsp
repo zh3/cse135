@@ -29,6 +29,8 @@
 	<body>
 		<%
 			Connection db = DBConnection.dbConnect();
+		
+			db.setAutoCommit(false);
 			String insert = "INSERT INTO applicants (firstName, middleName, lastName, " 
 					+ "streetAddress, city, state, zipCode, countryCode, areaCode, number, " 
 					+ "residencyStatus, countryOfCitizenship, countryOfResidence, specialization)" 
@@ -76,6 +78,9 @@
 				<h3> Your Application has failed to submit </h3>
 		<%
 			}
+			
+			db.commit();
+			db.setAutoCommit(true);
 			
 			res.close();
 			ps.close();
