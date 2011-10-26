@@ -14,7 +14,7 @@
 			%>
 	</head>
 	<body>
-		<h3>Provide Degrees - Choose University</h3>
+		<h3>Specialization Analytics</h3>
 		<!-- Provide an option for the user to add his or her own university. -->
 		 
 		
@@ -22,6 +22,10 @@
 		<!--print out a 3-column table of the specialization name followed by the number of applicants for
 		that discipline -->
 		<table>
+			<tr>
+				<th>Specialization </th>
+				<th>Number of Applicants</th>
+			</tr>
 			<tr>
 			<% 
 				PreparedStatement sql = db.prepareStatement("SELECT t.ID, t.name, count (DISTINCT s.ID) FROM specializations t, applicants s WHERE t.ID = s.specialization GROUP BY t.ID, t.name");
@@ -31,19 +35,20 @@
 				int i = 0;
 	            while (rset.next()) {
 	        %>
-	        		<% if (i % 3 == 0 && i > 0) { %>
-						</tr><tr>
-					<% } %>
-					<td>
-						<%= rset.getString(2) %>
-					</td>
-					
-					<td>
-					<a href = "applications.jsp?chosenSpecialization=<%= rset.getString(1) %>"> 
-							<%= rset.getInt(3) %> 
-						</a>
-					</td>
-	        <% 		
+		        	<tr>
+						<td>
+							<%= rset.getString(2)%>
+						</td>
+						
+						<td>
+						<div style="text-align:center">
+							<a href="applications.jsp?chosenSpecialization=<%= rset.getString(1) %>"> 
+								<%= rset.getInt(3) %> 
+							</a>
+						</div>
+						</td>
+					</tr>
+			<%
 	        		i++;
 	           } 
 	            

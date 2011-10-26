@@ -14,7 +14,7 @@
 			%>
 	</head>
 	<body>
-		<h3>Provide Degrees - Choose University</h3>
+		<h3>Discipline Analytics</h3>
 		<!-- Provide an option for the user to add his or her own university. -->
 		 
 		
@@ -23,6 +23,9 @@
 		that discipline -->
 		<table>
 			<tr>
+				<th>Discipline </th>
+				<th>Number of Applicants</th>
+			</tr>
 			<% 
 				PreparedStatement sql = db.prepareStatement("SELECT t.ID, t.name, count (DISTINCT s.applicant) FROM disciplines t, degrees s WHERE t.ID = s.discipline AND s.awardYear <= ?  GROUP BY t.ID, t.name");
 				sql.setInt(1, year);
@@ -31,18 +34,19 @@
 				int i = 0;
 	            while (rset.next()) {
 	        %>
-	        		<% if (i % 3 == 0 && i > 0) { %>
-						</tr><tr>
-					<% } %>
+				<tr>
 					<td>
 						<%= rset.getString(2)%>
 					</td>
 					
 					<td>
-					<a href = "applications.jsp?chosenDiscipline=<%= rset.getString(1) %>"> 
+					<div style="text-align:center">
+						<a href = "applications.jsp?chosenDiscipline=<%= rset.getString(1) %>"> 
 							<%= rset.getInt(3) %> 
 						</a>
+					</div>
 					</td>
+				</tr>
 	        <% 		
 	        		i++;
 	           } 
@@ -51,7 +55,6 @@
 	            sql.close();
 	            db.close();
 	        %>
-			</tr>
 		</table>
 	</body>
 </html>
