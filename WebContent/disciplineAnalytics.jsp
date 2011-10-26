@@ -10,7 +10,7 @@
 		<!-- connect to the database -->
 			<% 
 				Connection db = DBConnection.dbConnect();
-				
+			int year = Calendar.getInstance().get(Calendar.YEAR);
 			%>
 	</head>
 	<body>
@@ -24,10 +24,10 @@
 		<table>
 			<tr>
 			<% 
-				PreparedStatement sql = db.prepareStatement("SELECT t.ID, t.name, count (DISTINCT s.applicant) FROM disciplines t, degrees s WHERE t.ID = s.discipline GROUP BY t.ID, t.name");
-				
+				PreparedStatement sql = db.prepareStatement("SELECT t.ID, t.name, count (DISTINCT s.applicant) FROM disciplines t, degrees s WHERE t.ID = s.discipline AND s.awardYear <= ?  GROUP BY t.ID, t.name");
+				sql.setInt(1, year);
 				ResultSet rset = sql.executeQuery();
-			
+				
 				int i = 0;
 	            while (rset.next()) {
 	        %>
@@ -39,7 +39,7 @@
 					</td>
 					
 					<td>
-					<a href = "specializationAnalytics.jsp?chosenDiscipline=<%= rset.getString(1) %>"> 
+					<a href = "applications.jsp?chosenDiscipline=<%= rset.getString(1) %>"> 
 							<%= rset.getInt(3) %> 
 						</a>
 					</td>

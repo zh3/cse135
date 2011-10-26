@@ -10,15 +10,17 @@
 		<!-- Get the chosen parameter from either the specialization analytics page
 		     or the disciplineAnalytics page.  -->
 			<% 
-			    String location;
+			    Integer location;
 				Connection db = DBConnection.dbConnect();
 				 if(request.getParameter("chosenDiscipline") != null){
-					 location = request.getParameter("chosenDiscipline");
+					 location = Integer.parseInt(request.getParameter("chosenDiscipline"));
 				 }
-		   else{
-				   location = request.getParameter("chosenSpecialization");
+		   else if(request.getParameter("chosenSpecialization")!= null){
+				   location = Integer.parseInt(request.getParameter("chosenSpecialization"));
 		   }
-			%>
+		   else {location = -1;
+		   }
+		   %>
 	</head>
 	<body>
 		<h3>Applications</h3>
@@ -33,13 +35,21 @@
 			<% 
 			PreparedStatement sql;
 			 if(request.getParameter("chosenDiscipline") != null){
-				sql = db.prepareStatement("SELECT DISTINCT t.ID, t.firstName, t.middleName, t.lastName FROM applicants t, degrees s WHERE t.ID = s.applicant AND s.discipline = ?");
+				sql = db.prepareStatement("SELECT DISTINCT t.ID, t.firstName, t.middleName, t.lastName , t.streetAddress, t.city, t.state, t.zipCode, t.countryCode, t.residencyStatus, t.countryOfCitizenship, t.countryOfResidence, t.specialization FROM applicants t, degrees s WHERE t.ID = s.applicant AND s.discipline = ?");
+				sql.setInt(1, location);
+				ResultSet rset = sql.executeQuery();
+			 }
+			 else if(request.getParameter("chosenSpecialization")!= null) {
+				 sql = db.prepareStatement("SELECT DISTINCT t.ID, t.firstName, t.middleName, t.lastName, t.streetAddress, t.city, t.state, t.zipCode, t.countryCode, t.residencyStatus, t.countryOfCitizenship, t.countryOfResidence, t.specialization FROM applicants t WHERE t.specialization= ?");
+				 sql.setInt(1, location);
+				 
 			 }
 			 else{
-				 sql = db.prepareStatement("SELECT DISTINCT t.ID, t.firstName, t.middleName, t.lastName FROM applicants t WHERE t.specialization= ?");
+				 sql = db.prepareStatement("SELECT DISTINCT t.ID, t.firstName, t.middleName, t.lastName FROM applicants t");
+				 		 
 			 }
-			    sql.setString(1, location);
-				ResultSet rset = sql.executeQuery();
+			 ResultSet rset = sql.executeQuery();
+			    
 			
 				int i = 0;
 	            while (rset.next()) {
@@ -48,7 +58,18 @@
 						</tr><tr>
 					<% } %>
 					<td>
-						<%= rset.getString(2)+rset.getString(3)+rset.getString(4) %>
+						<% 
+						if(location == -1){
+							%>
+							<%= rset.getString(2)+ " " +rset.getString(3)+" "+rset.getString(4)%>
+						<% 
+						} else {
+							%> 
+						<%= rset.getString(2)+ " " +rset.getString(3)+" "+rset.getString(4)+ " " +rset.getString(5)+" "+rset.getString(6)+ " " +rset.getString(7)+" "+rset.getString(8)+ " " +rset.getString(9)+" "+rset.getString(10) + " " +rset.getString(11)+" "+rset.getString(12)+ " " +rset.getString(13)%>
+						<% 
+						}
+						%>
+						
 					</td>
 					
 	        <% 		
