@@ -1,10 +1,11 @@
-﻿DROP TABLE degrees;
+﻿/*
+DROP TABLE degrees;
 DROP TABLE applicants;
 DROP TABLE universities;
 DROP TABLE disciplines;
 DROP TABLE countries;
 DROP TABLE specializations;
-
+*/
 CREATE TABLE universities (
 	ID SERIAL PRIMARY KEY,
 	location TEXT NOT NULL,

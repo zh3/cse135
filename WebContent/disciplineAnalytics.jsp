@@ -24,7 +24,7 @@
 		<table>
 			<tr>
 			<% 
-				PreparedStatement sql = db.prepareStatement("SELECT t.ID, t.name, count (DISTINCT s.applicant) FROM disciplines t, degrees s WHERE t.ID = s.discipline GROUP BY t.name");
+				PreparedStatement sql = db.prepareStatement("SELECT t.ID, t.name, count (DISTINCT s.applicant) FROM disciplines t, degrees s WHERE t.ID = s.discipline GROUP BY t.ID, t.name");
 				
 				ResultSet rset = sql.executeQuery();
 			
