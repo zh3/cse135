@@ -78,6 +78,8 @@
 								
 								ResultSet nameRes = null;
 								PreparedStatement nameQuery = null;
+								ResultSet degreeRes = null;
+								PreparedStatement degreeQuery = null;
 								
 								try {
 									nameQuery = db.prepareStatement("SELECT name from countries where id = ?");
@@ -100,6 +102,47 @@
 									if (nameRes.next()) {
 										spec = nameRes.getString(1);
 									}
+								
+							%>
+							<br><b>Country of Citizenship: </b> <%= citizenship %>
+							<br><b>Country of Residence: </b> <%= residence  %>
+							<br><b>Specialization: </b> <%= spec %>
+							<br><b>Degrees: </b><br>
+							<%
+									Integer id = rset.getInt(1);
+									degreeQuery = db.prepareStatement("SELECT * FROM degrees WHERE applicant = ?");
+									degreeQuery.setInt(1, id);
+									degreeRes = degreeQuery.executeQuery();
+									
+									String degreeString;
+									while (degreeRes.next()) { 
+										degreeString = "";
+										
+										nameQuery = db.prepareStatement("SELECT name FROM disciplines WHERE id = ?");
+										nameQuery.setInt(1, degreeRes.getInt(7));
+										nameRes = nameQuery.executeQuery();
+										
+										if (nameRes.next()) {
+											degreeString = nameRes.getString(1);
+										}
+										
+										nameQuery = db.prepareStatement("SELECT name, location FROM universities WHERE id = ?");
+										nameQuery.setInt(1, degreeRes.getInt(6));
+										nameRes = nameQuery.executeQuery();
+										
+										if (nameRes.next()) {
+											degreeString += ", " + nameRes.getString(1) + ", " + nameRes.getString(2);
+										}
+										String gpa = degreeRes.getString(8);
+										final int PRECISION = 4;
+										if (gpa.length() > PRECISION) {
+											gpa = gpa.substring(0, PRECISION);
+										}
+										//degreeString += " GPA: " + degreeRes.getString(8) + " Awarded: " +degreeRes.getString(3) + "-" + degreeRes.getString(4);
+							%>
+										<%= degreeString %><b> GPA: </b> <%= gpa %> <b> Awarded: </b> <%= degreeRes.getString(3) + "-" + degreeRes.getString(4) %><br> 
+									
+							<%		}
 								} catch (SQLException e) {
 									throw new RuntimeException(e);
 								} finally {
@@ -107,9 +150,7 @@
 									if (nameQuery != null) nameQuery.close();
 								}
 							%>
-							<br><b>Country of Citizenship: </b> <%= citizenship %>
-							<br><b>Country of Residence: </b> <%= residence  %>
-							<br><b>Specialization: </b> <%= spec %>
+							
 							</div>
 						<% 
 						}
