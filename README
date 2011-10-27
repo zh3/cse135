@@ -8,3 +8,15 @@ Overview:
 All Custom java classes under src/
 JSP files under WebContent/
 text information support files under WebContent/txtdata
+
+Implementation:
+Kept same basic structure with all application data gradually
+accumulating in the session object. Only major modifications are the
+changes to use the database instead of vectors.
+
+Every file using the database connects using a function defined in
+a java class DBConnection.java.
+
+JSP files were used to generate the inserts to the database from the
+support vectors. All the sample data is now part of the
+ApplicationSystem.sql file.
