@@ -9,12 +9,56 @@
   <!-- Security Constraints -->
   <security-constraint>
     <web-resource-collection>
-      <web-resource-name>Restricted Area</web-resource-name>
+      <web-resource-name>Submission area</web-resource-name>
       <!-- Define the context-relative URL(s) to be protected -->
-      <url-pattern>/*</url-pattern>
+      <url-pattern>/submit.jsp</url-pattern>
     </web-resource-collection>
     <auth-constraint>
       <role-name>applicant</role-name>
+    </auth-constraint>
+  </security-constraint>
+  
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>Cancellation area</web-resource-name>
+      <!-- Define the context-relative URL(s) to be protected -->
+      <url-pattern>/cancel.jsp</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>applicant</role-name>
+    </auth-constraint>
+  </security-constraint>
+  
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>Specialization Analytics area</web-resource-name>
+      <!-- Define the context-relative URL(s) to be protected -->
+      <url-pattern>/specializationAnalytics.jsp</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>chair</role-name>
+    </auth-constraint>
+  </security-constraint>
+  
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>Discipline Analytics area</web-resource-name>
+      <!-- Define the context-relative URL(s) to be protected -->
+      <url-pattern>/disciplineAnalytics.jsp</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>chair</role-name>
+    </auth-constraint>
+  </security-constraint>
+  
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>Applications area</web-resource-name>
+      <!-- Define the context-relative URL(s) to be protected -->
+      <url-pattern>/applications.jsp</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>chair</role-name>
     </auth-constraint>
   </security-constraint>
 
@@ -33,6 +77,10 @@
   <!-- Security roles referenced by this web application -->
   <security-role>
     <role-name>applicant</role-name>
+  </security-role>
+  
+  <security-role>
+    <role-name>chair</role-name>
   </security-role>
 
   <welcome-file-list>
