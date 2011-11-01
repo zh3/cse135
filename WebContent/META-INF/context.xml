@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context path ="" debug="5" override="true" reloadable="true">
+	<Resource 
+		name="jdbc/ApplicationSystemPool"
+		description="CSE Application System Data Pool"
+		driverClassName="org.postgresql.Driver"
+		type="javax.sql.DataSource" auth="Container"
+		url="jdbc:postgresql://localhost/ApplicationSystem"
+		username="cse135" password="cl2um43z"
+		defaultAutoCommit="true"
+		maxActive="10" minIdle="0" maxIdle="5" maxWait="3000"
+		removeAbandoned="true" removeAbandonedTimeout="60"
+		logAbandoned="true" validationQuery="SELECT 1"
+	/>
+	<Resource 
+		name="jdbc/UsersPool"
+		description="CSE Applicants Data Pool"
+		driverClassName="org.postgresql.Driver"
+		type="javax.sql.DataSource" auth="Container"
+		url="jdbc:postgresql://localhost/UserSystem"
+		username="cse135" password="cl2um43z"
+		defaultAutoCommit="true"
+		maxActive="10" minIdle="0" maxIdle="5" maxWait="3000"
+		removeAbandoned="true" removeAbandonedTimeout="60"
+		logAbandoned="true" validationQuery="SELECT 1"
+	/>
+</Context>
