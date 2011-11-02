@@ -80,9 +80,6 @@ INSERT INTO userRoles (userName, role) VALUES ('TomApplicant', 'applicant');
 INSERT INTO users (username, password, email) VALUES ('TomChair', md5('cl2um43z'), 'tom2@tom.com');
 INSERT INTO userRoles (userName, role) VALUES ('TomChair', 'chair');
 
-SELECT * from users;
-SELECT * FROM userRoles;
-
 INSERT INTO universities (location, name) VALUES ('Alabama', 'Air University');
 INSERT INTO universities (location, name) VALUES ('Alabama', 'Alabama A&M University');
 INSERT INTO universities (location, name) VALUES ('Alabama', 'Alabama State University');
