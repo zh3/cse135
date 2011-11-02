@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>Applicant Registration</title>
 
 <%-- Import packages --%>
 
@@ -34,10 +34,10 @@ conn = ds.getConnection();
 <%
 if((String)session.getAttribute("alreadyRegistered") != null)
 {
-	if((String)session.getAttribute("alreadyRegistered") == "true")
+	if(((String)session.getAttribute("alreadyRegistered")).equals("true"))
 			{
 		
-	out.write("<h1>You are already registered. Please proceed to submit an application.</h1>");
+	out.write("<h3>You are already registered. Please proceed to submit an application.</h3>");
 
 }
 	
@@ -48,9 +48,9 @@ if((String)session.getAttribute("alreadyRegistered") != null)
 if(session.getAttribute("usernameAlreadyChosen") != null)
 {
 	
-	if((String)session.getAttribute("usernameAlreadyChosen") == "true"){
+	if(((String)session.getAttribute("usernameAlreadyChosen")).equals("true")) {
 		
-	out.write("<h2>Sorry, the user name you have selected has already been chosen.</h2>");
+	out.write("<h3>Sorry, the user name you have selected has already been chosen.</h3>");
 
 }
 	
@@ -61,7 +61,7 @@ if((String)session.getAttribute("blankPassword") != null)
 {
 	
 	
-	if((String)session.getAttribute("blankPassword") == "true"){
+	if(((String)session.getAttribute("blankPassword")).equals("true")){
 		
 	out.write("<h3>Please enter a password.</h3>");
 
@@ -72,10 +72,10 @@ if((String)session.getAttribute("blankPassword") != null)
 	
 	if((String)session.getAttribute("passwordsDontMatch") != null){
 		
-	if((String)session.getAttribute("passwordsDontMatch") == "true"){
+	if(((String)session.getAttribute("passwordsDontMatch")).equals("true")){
 		
 	
-	out.write("<h4>Passwords do not match.</h4>");
+	out.write("<h3>Passwords do not match.</h3>");
 
 }
 	
@@ -83,15 +83,15 @@ if((String)session.getAttribute("blankPassword") != null)
 	%>
 	
 	
-<h5>applicant registration</h5>
+<h3>Applicant Registration</h3>
 		
 		
 			<form name="myform" action= "registrationConfirmation.jsp"  method="GET">
 			
 			
 			username: <input type="text" size="20" name="username" />
-			<br>password: <input type="text" size="20" name="password" />
-			<br>retype password: <input type="text" size="20" name="password2" />
+			<br>password: <input type="password" size="20" name="password" />
+			<br>retype password: <input type="password" size="20" name="password2" />
 			<br>email:  <input type="text" size="20" name="email"/>
 			
 			
