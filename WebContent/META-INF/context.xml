@@ -24,4 +24,16 @@
 		removeAbandoned="true" removeAbandonedTimeout="60"
 		logAbandoned="true" validationQuery="SELECT 1"
 	/>
+	
+	<Realm className="org.apache.catalina.realm.DataSourceRealm"
+		   debug="99"
+		   dataSourceName="jdbc/ApplicationSystemPool"
+		   localDataSource="true"
+		   userTable="users"
+		   userNameCol="userName"
+		   userCredCol="password"
+		   userRoleTable="userRoles"
+		   roleNameCol="role"
+		   digest="MD5"
+	/>
 </Context>

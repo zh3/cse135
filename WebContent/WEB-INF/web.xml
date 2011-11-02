@@ -64,14 +64,13 @@
 
   <!-- Login configuration uses form-based authentication -->
   <login-config>
-    <auth-method>BASIC</auth-method>
-    <realm-name>Basic Authentication Area</realm-name>
-    <!-- 
+    <auth-method>FORM</auth-method>
+    <realm-name>Login Area</realm-name>
+
     <form-login-config>
       <form-login-page>/login.jsp</form-login-page>
-      <form-error-page>/login-error.jsp</form-error-page>
+      <form-error-page>/loginError.jsp</form-error-page>
     </form-login-config>
-     -->
   </login-config>
 
   <!-- Security roles referenced by this web application -->

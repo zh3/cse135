@@ -1,11 +1,12 @@
-﻿/*
-DROP TABLE degrees;
+﻿DROP TABLE degrees;
 DROP TABLE applicants;
 DROP TABLE universities;
 DROP TABLE disciplines;
 DROP TABLE countries;
 DROP TABLE specializations;
-*/
+DROP TABLE userRoles;
+DROP TABLE users;
+
 CREATE TABLE universities (
 	ID SERIAL PRIMARY KEY,
 	location TEXT NOT NULL,
@@ -70,11 +71,17 @@ CREATE TABLE users(
 
 CREATE TABLE userRoles (
     userRoleId     SERIAL PRIMARY KEY,
-    userRef        INTEGER REFERENCES users(ID),
     userName       TEXT NOT NULL,
     role           TEXT NOT NULL
 );
 
+INSERT INTO users (username, password, email) VALUES ('TomApplicant', md5('cl2um43z'), 'tom@tom.com');
+INSERT INTO userRoles (userName, role) VALUES ('TomApplicant', 'applicant');
+INSERT INTO users (username, password, email) VALUES ('TomChair', md5('cl2um43z'), 'tom2@tom.com');
+INSERT INTO userRoles (userName, role) VALUES ('TomChair', 'chair');
+
+SELECT * from users;
+SELECT * FROM userRoles;
 
 INSERT INTO universities (location, name) VALUES ('Alabama', 'Air University');
 INSERT INTO universities (location, name) VALUES ('Alabama', 'Alabama A&M University');
