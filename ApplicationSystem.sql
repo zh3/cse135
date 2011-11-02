@@ -59,6 +59,22 @@ CREATE TABLE degrees (
 	gpa FLOAT NOT NULL
 );
 
+CREATE TABLE users(
+ID SERIAL PRIMARY KEY,
+username TEXT NOT NULL,
+password TEXT NOT NULL,
+email TEXT NOT NULL,
+  UNIQUE(username),
+  UNIQUE(emailpg
+);
+
+CREATE TABLE user_roles (
+    user_role_id    SERIAL PRIMARY KEY,
+    user_ref        INTEGER REFERENCES users(ID),
+    user_name       TEXT NOT NULL,
+    role            TEXT NOT NULL
+);
+
 
 INSERT INTO universities (location, name) VALUES ('Alabama', 'Air University');
 INSERT INTO universities (location, name) VALUES ('Alabama', 'Alabama A&M University');
