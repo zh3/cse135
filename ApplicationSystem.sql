@@ -60,19 +60,19 @@ CREATE TABLE degrees (
 );
 
 CREATE TABLE users(
-ID SERIAL PRIMARY KEY,
-username TEXT NOT NULL,
-password TEXT NOT NULL,
-email TEXT NOT NULL,
-  UNIQUE(username),
-  UNIQUE(emailpg
+	ID SERIAL PRIMARY KEY,
+	username TEXT NOT NULL,
+	password TEXT NOT NULL,
+	email TEXT NOT NULL,
+	UNIQUE(username),
+	UNIQUE(email)
 );
 
-CREATE TABLE user_roles (
-    user_role_id    SERIAL PRIMARY KEY,
-    user_ref        INTEGER REFERENCES users(ID),
-    user_name       TEXT NOT NULL,
-    role            TEXT NOT NULL
+CREATE TABLE userRoles (
+    userRoleId     SERIAL PRIMARY KEY,
+    userRef        INTEGER REFERENCES users(ID),
+    userName       TEXT NOT NULL,
+    role           TEXT NOT NULL
 );
 
 
