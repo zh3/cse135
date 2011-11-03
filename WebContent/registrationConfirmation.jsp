@@ -10,93 +10,89 @@
 
 <%-- Open Connection Code --%>
 <%
-Connection conn = null;
-
-// Obtain the environment naming context
-Context initCtx = new InitialContext();
-// Look up the data source
-DataSource ds = (DataSource)
-initCtx.lookup("java:comp/env/jdbc/ApplicationSystemPool");
-// Allocate and use a connection from the pool
-conn = ds.getConnection();
-
-
-
-session.setAttribute("blankPassword", new String("false"));
-session.setAttribute("passwordsDontMatch", new String("false"));
-session.setAttribute("alreadyRegistered", new String("false"));
-session.setAttribute("usernameAlreadyChosen", new String("false"));
-
-String username = request.getParameter("username");
-String password = request.getParameter("password");
-String password2 = request.getParameter("password2");
-String email = request.getParameter("email");
-
-PreparedStatement sql = conn.prepareStatement("SELECT username, email FROM users WHERE username = ?");
-sql.setString(1, username);
-ResultSet rset = sql.executeQuery();
-
-int i = 0;
-while (rset.next()) {
-	if(username.equals(rset.getString(1)) && email.equals(rset.getString(2)))
-	{
-		if(password == "")
-		{
-			
-			session.setAttribute("blankPassword", new String("true"));
-			response.sendRedirect("applicantRegistration.jsp");
-		}
-		else if(!password.equals(password2)){
-			
-			session.setAttribute("passwordsDontMatch", new String("true"));
-			response.sendRedirect("applicantRegistration.jsp");
-		}
-		session.setAttribute("alreadyRegistered", new String("true"));
-		response.sendRedirect("applicantRegistration.jsp");
+	PreparedStatement sql = null;
+	ResultSet rset = null;
+	Connection conn = null;
+	
+	try {
+	
+	// Obtain the environment naming context
+	Context initCtx = new InitialContext();
+	// Look up the data source
+	DataSource ds = (DataSource)
+	initCtx.lookup("java:comp/env/jdbc/ApplicationSystemPool");
+	// Allocate and use a connection from the pool
+	conn = ds.getConnection();
+	
+	
+	
+	session.setAttribute("blankPassword", new String("false"));
+	session.setAttribute("passwordsDontMatch", new String("false"));
+	session.setAttribute("alreadyRegistered", new String("false"));
+	session.setAttribute("usernameAlreadyChosen", new String("false"));
+	
+	String username = request.getParameter("username");
+	String password = request.getParameter("password");
+	String password2 = request.getParameter("password2");
+	String email = request.getParameter("email");
+	
+	if (username.equals("")) {
+		response.sendRedirect("applicantRegistration.jsp?problem=usernameBlank");
 	}
-	else if(username.equals(rset.getString(1))){
 	
-		session.setAttribute("usernameAlreadyChosen", new String("true"));
-		response.sendRedirect("applicantRegistration.jsp");
+	sql = conn.prepareStatement("SELECT username FROM users WHERE username = ?");
+	sql.setString(1, username);
+	rset = sql.executeQuery();
+	if (rset.next()) {
+		response.sendRedirect("applicantRegistration.jsp?problem=usernameAlreadyChosen");
 	}
-	i++;
-}
-
-rset.close();
-sql.close();
-if(password == "")
-{
 	
-	session.setAttribute("blankPassword", new String("true"));
+	if (password.equals("") || password2.equals("")) {
+		response.sendRedirect("applicantRegistration.jsp?problem=blankPassword");
+	}
 	
-	response.sendRedirect("applicantRegistration.jsp");
-}
-else if(!password.equals(password2)){
-
-
-	session.setAttribute("passwordsDontMatch", new String("true"));
-	response.sendRedirect("applicantRegistration.jsp");
-}
-
-
+	if (!password.equals(password2)) {
+		response.sendRedirect("applicantRegistration.jsp?problem=passwordsDontMatch");
+	}
+	
+	if (email.equals("")) {
+		response.sendRedirect("applicantRegistration.jsp?problem=blankEmail");
+	}
+	
+	sql = conn.prepareStatement("SELECT email FROM users WHERE email = ?");
+	sql.setString(1, email);
+	rset = sql.executeQuery();
+	if (rset.next()) {
+		response.sendRedirect("applicantRegistration.jsp?problem=alreadyRegistered");
+	}
 %>
 </head>
 <body>
 <%
-out.write("You have successfully registered!");
-PreparedStatement sql2 = conn.prepareStatement("INSERT INTO users (username, password, email) VALUES (?, md5(?),?);");
-sql2.setString(1, username);
-sql2.setString(2, password);
-sql2.setString(3, email);
-sql2.executeUpdate();
-sql2.close();
+	sql = conn.prepareStatement("INSERT INTO users (username, password, email) VALUES (?, md5(?),?);");
+	sql.setString(1, username);
+	sql.setString(2, password);
+	sql.setString(3, email);
+	sql.executeUpdate();
+	sql.close();
+	
+	
+	sql = conn.prepareStatement("INSERT INTO userRoles (userName, role) VALUES (?, ?)");
+	sql.setString(1, username);
+	sql.setString(2, "applicant");
+	sql.executeUpdate();
+	sql.close();
+	
+	out.write("<h3>You have successfully registered!</h3>");
+	
+	} catch (SQLException e) {
+		out.write("<h3>An error occurred with your registration</h3>");
+	} finally {
+		if (rset != null) rset.close();
+		if (sql != null) sql.close();
+		if (conn != null) conn.close();
+	}
 
-
-PreparedStatement sql3 = conn.prepareStatement("INSERT INTO userRoles (userName, role) VALUES (?, ?)");
-sql3.setString(1, username);
-sql3.setString(2, "applicant");
-sql3.executeUpdate();
-sql3.close();
 %>
 </body>
 </html>

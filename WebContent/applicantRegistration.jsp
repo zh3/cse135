@@ -21,66 +21,39 @@ initCtx.lookup("java:comp/env/jdbc/ApplicationSystemPool");
 // Allocate and use a connection from the pool
 conn = ds.getConnection();
 
-
+String problem = request.getParameter("problem");
 %>
 
+<% if (problem == null) { %>
+No problemo!
+<% } else {%>
+Problem is: <%= problem %>
+<% } %>
 </head>
 
 
 
 <body>
 
-
 <%
-if((String)session.getAttribute("alreadyRegistered") != null)
-{
-	if(((String)session.getAttribute("alreadyRegistered")).equals("true"))
-			{
-		
-	out.write("<h3>You are already registered. Please proceed to submit an application.</h3>");
-
-}
-	
-	
-}
-
-
-if(session.getAttribute("usernameAlreadyChosen") != null)
-{
-	
-	if(((String)session.getAttribute("usernameAlreadyChosen")).equals("true")) {
-		
-	out.write("<h3>Sorry, the user name you have selected has already been chosen.</h3>");
-
-}
-	
-}
-	
-
-if((String)session.getAttribute("blankPassword") != null)
-{
-	
-	
-	if(((String)session.getAttribute("blankPassword")).equals("true")){
-		
-	out.write("<h3>Please enter a password.</h3>");
-
-}
-	
-}
-	
-	
-	if((String)session.getAttribute("passwordsDontMatch") != null){
-		
-	if(((String)session.getAttribute("passwordsDontMatch")).equals("true")){
-		
-	
-	out.write("<h3>Passwords do not match.</h3>");
-
-}
-	
-}
-	%>
+	if (problem != null) {
+		if (problem.equals("blankEmail")) {
+			out.write("<h3>Please enter an email address.</h3>");
+		} else if (problem.equals("usernameBlank")) {
+			out.write("<h3>Please enter a username.</h3>");
+		} else if (problem.equals("alreadyRegistered")) {
+			out.write("<h3>You are already registered. Please login to submit an application.</h3>");
+		} else if (problem.equals("usernameAlreadyChosen")) {
+			out.write("<h3>Sorry, the user name you have selected has already been chosen.</h3>");
+		} else if (problem.equals("blankPassword")) {
+			out.write("<h3>Please enter a password.</h3>");
+		} else if (problem.equals("passwordsDontMatch")) {
+			out.write("<h3>Passwords do not match.</h3>");
+		} else {
+			out.write("<h3>Unknown problem occurred.</h3>");
+		}
+	}
+%>
 	
 	
 <h3>Applicant Registration</h3>
