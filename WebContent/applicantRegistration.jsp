@@ -23,12 +23,6 @@ conn = ds.getConnection();
 
 String problem = request.getParameter("problem");
 %>
-
-<% if (problem == null) { %>
-No problemo!
-<% } else {%>
-Problem is: <%= problem %>
-<% } %>
 </head>
 
 

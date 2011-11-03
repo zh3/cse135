@@ -16,6 +16,9 @@
     <auth-constraint>
       <role-name>applicant</role-name>
     </auth-constraint>
+    <user-data-constraint>
+    	<transport-guarantee>CONFIDENTIAL</transport-guarantee>
+    </user-data-constraint>
   </security-constraint>
   
   <security-constraint>
@@ -27,6 +30,9 @@
     <auth-constraint>
       <role-name>applicant</role-name>
     </auth-constraint>
+    <user-data-constraint>
+    	<transport-guarantee>CONFIDENTIAL</transport-guarantee>
+    </user-data-constraint>
   </security-constraint>
   
   <security-constraint>
@@ -38,6 +44,9 @@
     <auth-constraint>
       <role-name>chair</role-name>
     </auth-constraint>
+    <user-data-constraint>
+    	<transport-guarantee>CONFIDENTIAL</transport-guarantee>
+    </user-data-constraint>
   </security-constraint>
   
   <security-constraint>
@@ -49,6 +58,9 @@
     <auth-constraint>
       <role-name>chair</role-name>
     </auth-constraint>
+    <user-data-constraint>
+    	<transport-guarantee>CONFIDENTIAL</transport-guarantee>
+    </user-data-constraint>
   </security-constraint>
   
   <security-constraint>
@@ -60,6 +72,9 @@
     <auth-constraint>
       <role-name>chair</role-name>
     </auth-constraint>
+    <user-data-constraint>
+    	<transport-guarantee>CONFIDENTIAL</transport-guarantee>
+    </user-data-constraint>
   </security-constraint>
 
   <!-- Login configuration uses form-based authentication -->

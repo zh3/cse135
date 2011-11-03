@@ -14,5 +14,6 @@
 			<input size="12" name="j_password" type="password" /><br/>
 			<input type="submit" value="Login"/>
 		</form>
+		<br/><a href="applicantRegistration.jsp">Register</a>
 	</body>
 </html>
