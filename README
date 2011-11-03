@@ -20,3 +20,12 @@ a java class DBConnection.java.
 JSP files were used to generate the inserts to the database from the
 support vectors. All the sample data is now part of the
 ApplicationSystem.sql file.
+
+Phase 3 implementation:
+Core application the same as before. Changed settings in the
+server.xml file and web.xml to implement the access constraints.
+
+New pages are the Login and login failure pages as well the
+registration pages. request.sendRedirect is used to call the
+registration form again if there is an error and the registration
+form contains to logic to display the error messages.
