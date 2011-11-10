@@ -29,3 +29,16 @@ New pages are the Login and login failure pages as well the
 registration pages. request.sendRedirect is used to call the
 registration form again if there is an error and the registration
 form contains to logic to display the error messages.
+
+Phase 4 implementation:
+Added the concept of a review to the database. Review references both
+an application and a reviewer and includes the grade as an integer
+and a comment as a text field.
+
+Added the concept of a Reviewer Workload. Each entry links a reviewer
+to an application they are to review.
+
+Added an admission status to the application which will indicate if
+the candidate is 'accepted' 'rejected' or 'pending;
+
+Attached a reference to a user to applications.
