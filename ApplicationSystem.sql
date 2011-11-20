@@ -1,4 +1,6 @@
-﻿DROP TABLE degrees;
+﻿DROP TABLE workload;
+DROP TABLE reviews;
+DROP TABLE degrees;
 DROP TABLE applicants;
 DROP TABLE universities;
 DROP TABLE disciplines;
@@ -76,6 +78,19 @@ CREATE TABLE degrees (
 	university INTEGER REFERENCES universities (ID) NOT NULL,
 	discipline INTEGER REFERENCES disciplines (ID) NOT NULL,
 	gpa FLOAT NOT NULL
+);
+
+CREATE TABLE reviews (
+	ID SERIAL PRIMARY KEY,
+	grade INTEGER NOT NULL,
+	comment TEXT NOT NULL,
+	applicant INTEGER REFERENCES applicants (ID) NOT NULL
+);
+
+CREATE TABLE workload (
+	ID SERIAL PRIMARY KEY,
+	reviewer INTEGER REFERENCES users (ID) NOT NULL,
+	applicant INTEGER REFERENCES applicants (ID) NOT NULL
 );
 
 select * from applicants;
