@@ -132,6 +132,10 @@
   <security-role>
     <role-name>chair</role-name>
   </security-role>
+  
+  <security-role>
+    <role-name>reviewer</role-name>
+  </security-role>
 
   <welcome-file-list>
     <welcome-file>names.html</welcome-file>
