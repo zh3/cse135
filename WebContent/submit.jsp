@@ -24,6 +24,25 @@
 				ps.executeUpdate();
 				ps.close();
 			}
+		
+		int getUserId(String userName, Connection db) throws SQLException {
+			int userId = -1;
+			ResultSet rset;
+			
+			PreparedStatement ps = db.prepareStatement("SELECT id FROM users WHERE username = ?");
+			
+			ps.setString(1, userName);
+			rset = ps.executeQuery();
+			
+			if (rset.next()) {
+				userId = rset.getInt(1);
+			}
+			
+			rset.close();
+			ps.close();
+			
+			return userId;
+		}
 		%>
 	</head>
 	<body>
@@ -33,8 +52,9 @@
 			db.setAutoCommit(false);
 			String insert = "INSERT INTO applicants (firstName, middleName, lastName, " 
 					+ "streetAddress, city, state, zipCode, countryCode, areaCode, number, " 
-					+ "residencyStatus, countryOfCitizenship, countryOfResidence, specialization)" 
-					+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id";
+					+ "residencyStatus, countryOfCitizenship, countryOfResidence, specialization,"
+					+ " applicationStatus, userId)" 
+					+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id";
 			PreparedStatement ps = db.prepareStatement(insert);
 			
 			ps.setString(1, (String) session.getAttribute("firstName"));
@@ -58,10 +78,12 @@
 			ps.setInt(12, (Integer) session.getAttribute("countryOfCitizenshipId"));
 			ps.setInt(13, (Integer) session.getAttribute("countryOfResidenceId"));
 			ps.setInt(14, (Integer) session.getAttribute("specialization"));
+			ps.setString(15, "Pending");
+			
+			int userId = getUserId(request.getUserPrincipal().getName(), db);
+			ps.setInt(16, userId);
 			
 			ResultSet res = ps.executeQuery();
-			
-			
 			
 			if (res.next()) {
 				int applicantId = res.getInt(1);

@@ -28,6 +28,21 @@ CREATE TABLE specializations (
 	name TEXT NOT NULL
 );
 
+CREATE TABLE users(
+	ID SERIAL PRIMARY KEY,
+	username TEXT NOT NULL,
+	password TEXT NOT NULL,
+	email TEXT NOT NULL,
+	UNIQUE(username),
+	UNIQUE(email)
+);
+
+CREATE TABLE userRoles (
+    userRoleId     SERIAL PRIMARY KEY,
+    userName       TEXT NOT NULL,
+    role           TEXT NOT NULL
+);
+
 CREATE TABLE applicants (
 	ID SERIAL PRIMARY KEY ,
 	firstName TEXT NOT NULL,
@@ -46,7 +61,10 @@ CREATE TABLE applicants (
 	residencyStatus TEXT, -- Only Non US citizens have a residency status
 	countryOfCitizenship INTEGER REFERENCES countries (ID) NOT NULL,
 	countryOfResidence INTEGER REFERENCES countries (ID) NOT NULL,
-	specialization INTEGER REFERENCES specializations (ID) NOT NULL
+	specialization INTEGER REFERENCES specializations (ID) NOT NULL,
+
+	applicationStatus TEXT NOT NULL,
+	userId INTEGER REFERENCES users(ID) NOT NULL UNIQUE
 );
 
 CREATE TABLE degrees (
@@ -60,20 +78,8 @@ CREATE TABLE degrees (
 	gpa FLOAT NOT NULL
 );
 
-CREATE TABLE users(
-	ID SERIAL PRIMARY KEY,
-	username TEXT NOT NULL,
-	password TEXT NOT NULL,
-	email TEXT NOT NULL,
-	UNIQUE(username),
-	UNIQUE(email)
-);
-
-CREATE TABLE userRoles (
-    userRoleId     SERIAL PRIMARY KEY,
-    userName       TEXT NOT NULL,
-    role           TEXT NOT NULL
-);
+select * from applicants;
+select * from users;
 
 INSERT INTO users (username, password, email) VALUES ('TomApplicant', md5('cl2um43z'), 'tom@tom.com');
 INSERT INTO userRoles (userName, role) VALUES ('TomApplicant', 'applicant');

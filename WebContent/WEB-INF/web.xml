@@ -4,14 +4,50 @@
    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
    version="2.5"> 
 
-  <display-name>Access Control Web Application</display-name>
+  <display-name>StudentsDatabase</display-name>
+  <servlet>
+    <servlet-name>action</servlet-name>
+    <servlet-class>org.apache.struts.action.ActionServlet</servlet-class>
+    <init-param>
+      <param-name>config</param-name>
+      <param-value>/WEB-INF/struts-config.xml</param-value>
+    </init-param>
+    <load-on-startup>2</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>action</servlet-name>
+    <url-pattern>*.do</url-pattern>
+  </servlet-mapping>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
 
+  <display-name>Access Control Web Application</display-name>
   <!-- Security Constraints -->
   <security-constraint>
     <web-resource-collection>
       <web-resource-name>Submission area</web-resource-name>
       <!-- Define the context-relative URL(s) to be protected -->
       <url-pattern>/submit.jsp</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>applicant</role-name>
+    </auth-constraint>
+    <user-data-constraint>
+    	<transport-guarantee>CONFIDENTIAL</transport-guarantee>
+    </user-data-constraint>
+  </security-constraint>
+  
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>Application Creation area</web-resource-name>
+      <!-- Define the context-relative URL(s) to be protected -->
+      <url-pattern>/myApplication.do</url-pattern>
     </web-resource-collection>
     <auth-constraint>
       <role-name>applicant</role-name>
