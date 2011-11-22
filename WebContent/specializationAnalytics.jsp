@@ -42,7 +42,7 @@
 						
 						<td>
 						<div style="text-align:center">
-							<a href="applications.jsp?chosenSpecialization=<%= rset.getString(1) %>"> 
+							<a href="showSpecializationApplications.do?chosenSpecialization=<%= rset.getString(1) %>"> 
 								<%= rset.getInt(3) %> 
 							</a>
 						</div>

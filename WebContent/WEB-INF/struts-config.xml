@@ -38,7 +38,7 @@
 			<forward name="success" path="/disciplineAnalytics.jsp" />
 		</action>
 		<action path="/specializationAnalytics" type="com.cse135project.actions.SpecializationAnalyticsAction">
-			<forward name="success" path="/disciplineAnalytics.jsp" />
+			<forward name="success" path="/specializationAnalytics.jsp" />
 		</action>
 		<action path="/applicationsByReviewer" type="com.cse135project.actions.ApplicationsByReviewerAction">
 			<forward name="success" path="/applicationsByReviewer.jsp" />
@@ -58,6 +58,14 @@
 			<forward name="success" path="/applications.jsp" />
 		</action>
 		<action path="/cancelDecision" type="com.cse135project.actions.CancelDecisionAction"
+			validate="false" scope="request" input="applications.jsp" name="applicantFormCancel">
+			<forward name="success" path="/applications.jsp" />
+		</action>
+		<action path="/showDisciplineApplications" type="com.cse135project.actions.ShowDisciplineApplicationsAction"
+			validate="false" scope="request" input="applications.jsp" name="applicantFormCancel">
+			<forward name="success" path="/applications.jsp" />
+		</action>
+		<action path="/showSpecializationApplications" type="com.cse135project.actions.ShowSpecializationApplicationsAction"
 			validate="false" scope="request" input="applications.jsp" name="applicantFormCancel">
 			<forward name="success" path="/applications.jsp" />
 		</action>

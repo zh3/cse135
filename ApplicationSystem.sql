@@ -3906,6 +3906,9 @@ applicants (
 	'123', '12345', 'resident', 101, 71, 9, 'Pending', 3
 );
 
+INSERT INTO degrees (applicant, awardMonth, awardYear, title, university, discipline, gpa)
+VALUES (3, 10, 2010, 'PhD', 2, 4, 2.0);
+
 INSERT INTO 
 applicants (
 	firstname, middlename, lastname, streetaddress, city, state, zipcode, countrycode, 
@@ -3915,6 +3918,9 @@ applicants (
 	'Reviewed', 'A', 'Applicant', '123 fakestreet', 'faketown', 'fakestate', 'fakezip' , '123',
 	'123', '12345', 'resident', 17, 34, 5, 'Pending', 7
 );
+
+INSERT INTO degrees (applicant, awardMonth, awardYear, title, university, discipline, gpa)
+VALUES (4, 10, 2010, 'PhD', 2, 4, 2.0);
 
 INSERT INTO 
 applicants (
@@ -3926,6 +3932,11 @@ applicants (
 	'123', '12345', 'resident', 18, 35, 2, 'Pending', 8
 );
 
+INSERT INTO degrees (applicant, awardMonth, awardYear, title, university, discipline, gpa)
+VALUES (5, 10, 2009, 'PhD', 2, 1, 2.5);
+INSERT INTO degrees (applicant, awardMonth, awardYear, title, university, discipline, gpa)
+VALUES (5, 10, 2010, 'PhD', 2, 1, 3.0);
+
 INSERT INTO 
 applicants (
 	firstname, middlename, lastname, streetaddress, city, state, zipcode, countrycode, 
@@ -3935,6 +3946,9 @@ applicants (
 	'James', 'R', 'Applicant', '123 fakestreet', 'faketown', 'fakestate', 'fakezip' , '123',
 	'123', '12345', 'resident', 19, 36, 1, 'Pending', 9
 );
+
+INSERT INTO degrees (applicant, awardMonth, awardYear, title, university, discipline, gpa)
+VALUES (6, 10, 2010, 'PhD', 2, 3, 3.0);
 
 INSERT INTO 
 applicants (
@@ -3946,6 +3960,9 @@ applicants (
 	'123', '12345', 'resident', 19, 80, 6, 'Pending', 10
 );
 
+INSERT INTO degrees (applicant, awardMonth, awardYear, title, university, discipline, gpa)
+VALUES (7, 10, 2010, 'PhD', 2, 3, 3.0);
+
 INSERT INTO 
 applicants (
 	firstname, middlename, lastname, streetaddress, city, state, zipcode, countrycode, 
@@ -3955,6 +3972,13 @@ applicants (
 	'Common', 'U', 'UngradedApplicant', '123 fakestreet', 'faketown', 'fakestate', 'fakezip' , '123',
 	'123', '12345', 'resident', 20, 11, 7, 'Pending', 11
 );
+
+INSERT INTO degrees (applicant, awardMonth, awardYear, title, university, discipline, gpa)
+VALUES (8, 10, 2010, 'PhD', 2, 2, 2.2);
+INSERT INTO degrees (applicant, awardMonth, awardYear, title, university, discipline, gpa)
+VALUES (8, 10, 2010, 'PhD', 2, 2, 3.1);
+INSERT INTO degrees (applicant, awardMonth, awardYear, title, university, discipline, gpa)
+VALUES (8, 10, 2010, 'PhD', 2, 4, 4.0);
 
 INSERT INTO workload (reviewer, applicant) VALUES (5, 1);
 INSERT INTO workload (reviewer, applicant) VALUES (5, 2);
@@ -4006,6 +4030,31 @@ FROM workload, applicants
 WHERE workload.applicant = applicants.id
 AND workload.reviewer IN
 	(SELECT id FROM users WHERE username = 'VickyReviewer');
+
+SELECT name from disciplines where id = 2;
+
+SELECT id, firstname, middlename, lastname, SUM(avgGrade) AS avgGrade, applicationStatus
+FROM
+(SELECT applicants.id, firstname, middlename, lastname, 0 AS avgGrade, applicationStatus
+FROM workload, applicants
+WHERE workload.applicant = applicants.id
+UNION
+SELECT applicants.id, firstname, middlename, lastname, avgGrade, applicationStatus
+FROM
+	(SELECT applicants.id AS applicantId, AVG(grade) as avgGrade
+	FROM reviews, applicants
+	WHERE applicant = applicants.id
+	GROUP BY applicants.id) AS applicantAvgGrades, 
+	applicants, 
+	reviews
+WHERE applicantAvgGrades.applicantId = applicants.id
+AND reviews.applicant = applicants.id) AS applicantsWithAvgGrade
+WHERE applicantsWithAvgGrade.id IN
+(SELECT DISTINCT t.ID
+FROM 
+applicants t, degrees s 
+WHERE t.ID = s.applicant AND s.discipline = 4)
+GROUP BY id, firstname, middlename, lastname, applicationStatus;
 
 
 /* UPDATE applicants SET applicationStatus = 'Accepted' WHERE id = 1; */

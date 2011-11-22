@@ -64,5 +64,8 @@
 		<% } %>
 		
 		</table>
+		
+		<h4>Navigation</h4>
+		<%@ include file="reviewHub.jsp" %>
 	</body>
 </html>

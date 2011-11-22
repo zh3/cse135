@@ -41,7 +41,7 @@
 					
 					<td>
 					<div style="text-align:center">
-						<a href = "applications.jsp?chosenDiscipline=<%= rset.getString(1) %>"> 
+						<a href = "showDisciplineApplications.do?chosenDiscipline=<%= rset.getString(1) %>"> 
 							<%= rset.getInt(3) %> 
 						</a>
 					</div>
