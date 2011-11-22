@@ -98,20 +98,6 @@
     	<transport-guarantee>CONFIDENTIAL</transport-guarantee>
     </user-data-constraint>
   </security-constraint>
-  
-  <security-constraint>
-    <web-resource-collection>
-      <web-resource-name>Applications area</web-resource-name>
-      <!-- Define the context-relative URL(s) to be protected -->
-      <url-pattern>/applications.jsp</url-pattern>
-    </web-resource-collection>
-    <auth-constraint>
-      <role-name>chair</role-name>
-    </auth-constraint>
-    <user-data-constraint>
-    	<transport-guarantee>CONFIDENTIAL</transport-guarantee>
-    </user-data-constraint>
-  </security-constraint>
 
   <!-- Login configuration uses form-based authentication -->
   <login-config>

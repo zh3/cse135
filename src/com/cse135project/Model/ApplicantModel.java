@@ -28,7 +28,7 @@ public class ApplicantModel {
 			+ "ON gradedApplications.username = ungradedApplications.username";
 	
 	private static final String gradedApplicantsByReviewerUsernameString
-		= "SELECT firstname, middlename, lastname, avgGrade, applicationStatus "
+		= "SELECT applicants.id, firstname, middlename, lastname, avgGrade, applicationStatus "
 			+ "FROM "
 				+ "(SELECT applicants.id AS applicantId, AVG(grade) as avgGrade "
 				+ "FROM reviews, applicants "
@@ -40,6 +40,9 @@ public class ApplicantModel {
 			+ "AND reviews.applicant = applicants.id "
 			+ "AND reviews.reviewer IN "
 			+"(SELECT id FROM users WHERE username = ?);";
+	
+	private static final String updateApplicantByIdString
+		= "UPDATE applicants SET applicationStatus = ? WHERE id = ?;";
 	
 	public static CachedRowSet getApplicantsByReviewer() throws DbException {
 		try {
@@ -82,5 +85,36 @@ public class ApplicantModel {
 		} catch (NamingException e) {
 			throw new DbException(e);
 		} 
+	}
+	
+	public static void admitApplicant(int applicantId) throws DbException {
+		 updateApplicantAdmissionStatusById(applicantId, "Accepted");
+	}
+	
+	public static void rejectApplicant(int applicantId) throws DbException {
+		 updateApplicantAdmissionStatusById(applicantId, "Rejected");
+	}
+	
+	public static void cancelDecision(int applicantId) throws DbException {
+		 updateApplicantAdmissionStatusById(applicantId, "Pending");
+	}
+	
+	private static void updateApplicantAdmissionStatusById(int applicantId, 
+			String newStatus) throws DbException {
+		try {
+			Connection conn = DBConnection.dbConnect();
+			PreparedStatement pstmt = conn.prepareStatement(updateApplicantByIdString);
+			
+			pstmt.setString(1, newStatus);
+			pstmt.setInt(2, applicantId);
+			pstmt.executeUpdate();
+
+			pstmt.close();
+			conn.close();
+		} catch (SQLException e) {
+			throw new DataBindingException(e);
+		} catch (NamingException e) {
+			throw new DbException(e);
+		}
 	}
 }

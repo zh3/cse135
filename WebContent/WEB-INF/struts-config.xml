@@ -5,6 +5,14 @@
 
 <struts-config>
 
+	<!-- Form Bean Definitions -->
+
+	<form-beans>
+		<form-bean type="com.cse135project.forms.ApplicantFormAdmit" name="applicantFormAdmit" />
+		<form-bean type="com.cse135project.forms.ApplicantFormReject" name="applicantFormReject" />
+		<form-bean type="com.cse135project.forms.ApplicantFormCancel" name="applicantFormCancel" />
+	</form-beans>
+
 	<!-- Global Exception Definitions -->
 
 	<global-exceptions>
@@ -30,6 +38,18 @@
 			<forward name="success" path="/applicationsByReviewer.jsp" />
 		</action>
 		<action path="/showGradedApplications" type="com.cse135project.actions.ShowGradedApplicationsAction">
+			<forward name="success" path="/applications.jsp" />
+		</action>
+		<action path="/admitApplicant" type="com.cse135project.actions.AdmitApplicantAction"
+			validate="false" scope="request" input="applications.jsp" name="applicantFormAdmit">
+			<forward name="success" path="/applications.jsp" />
+		</action>
+		<action path="/rejectApplicant" type="com.cse135project.actions.RejectApplicantAction"
+			validate="false" scope="request" input="applications.jsp" name="applicantFormReject">
+			<forward name="success" path="/applications.jsp" />
+		</action>
+		<action path="/cancelDecision" type="com.cse135project.actions.CancelDecisionAction"
+			validate="false" scope="request" input="applications.jsp" name="applicantFormCancel">
 			<forward name="success" path="/applications.jsp" />
 		</action>
 	</action-mappings>

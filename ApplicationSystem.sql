@@ -3974,7 +3974,7 @@ INNER JOIN
 	GROUP BY username) AS ungradedApplications
 ON gradedApplications.username = ungradedApplications.username;
 
-SELECT firstname, middlename, lastname, avgGrade, applicationStatus
+SELECT applicants.id, firstname, middlename, lastname, avgGrade, applicationStatus
 FROM
 	(SELECT applicants.id AS applicantId, AVG(grade) as avgGrade
 	FROM reviews, applicants
@@ -3986,3 +3986,5 @@ WHERE applicantAvgGrades.applicantId = applicants.id
 AND reviews.applicant = applicants.id
 AND reviews.reviewer IN
 	(SELECT id FROM users WHERE username = 'GeoffReviewer');
+
+/* UPDATE applicants SET applicationStatus = 'Accepted' WHERE id = 1; */
