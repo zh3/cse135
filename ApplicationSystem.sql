@@ -84,6 +84,7 @@ CREATE TABLE reviews (
 	ID SERIAL PRIMARY KEY,
 	grade INTEGER NOT NULL,
 	comment TEXT NOT NULL,
+	reviewer INTEGER REFERENCES users (ID) NOT NULL,
 	applicant INTEGER REFERENCES applicants (ID) NOT NULL
 );
 
@@ -92,14 +93,6 @@ CREATE TABLE workload (
 	reviewer INTEGER REFERENCES users (ID) NOT NULL,
 	applicant INTEGER REFERENCES applicants (ID) NOT NULL
 );
-
-select * from applicants;
-select * from users;
-
-INSERT INTO users (username, password, email) VALUES ('TomApplicant', md5('cl2um43z'), 'tom@tom.com');
-INSERT INTO userRoles (userName, role) VALUES ('TomApplicant', 'applicant');
-INSERT INTO users (username, password, email) VALUES ('TomChair', md5('cl2um43z'), 'tom2@tom.com');
-INSERT INTO userRoles (userName, role) VALUES ('TomChair', 'chair');
 
 INSERT INTO universities (location, name) VALUES ('Alabama', 'Air University');
 INSERT INTO universities (location, name) VALUES ('Alabama', 'Alabama A&M University');
@@ -3845,3 +3838,151 @@ INSERT INTO disciplines (name) VALUES ('Computer Science');
 INSERT INTO disciplines (name) VALUES ('Computer Engineering');
 INSERT INTO disciplines (name) VALUES ('Computer Science - Bionformatics');
 INSERT INTO disciplines (name) VALUES ('Electrical Engineering');
+
+INSERT INTO users (username, password, email) VALUES ('TomApplicant', md5('cl2um43z'), 'tom@tom.com');
+INSERT INTO userRoles (userName, role) VALUES ('TomApplicant', 'applicant');
+INSERT INTO users (username, password, email) VALUES ('JamesApplicant', md5('cl2um43z'), 'james@james.net');
+INSERT INTO userRoles (userName, role) VALUES ('JamesApplicant', 'applicant');
+INSERT INTO users (username, password, email) VALUES ('ZhanzhanApplicant', md5('cl2um43z'), 'zhan@james.net');
+INSERT INTO userRoles (userName, role) VALUES ('ZhanzhanApplicant', 'applicant');
+INSERT INTO users (username, password, email) VALUES ('TomChair', md5('cl2um43z'), 'tom2@tom.com');
+INSERT INTO userRoles (userName, role) VALUES ('TomChair', 'chair');
+INSERT INTO users (username, password, email) VALUES ('GeoffReviewer', md5('cl2um43z'), 'geoff@tom.com');
+INSERT INTO userRoles (userName, role) VALUES ('GeoffReviewer', 'reviewer');
+INSERT INTO users (username, password, email) VALUES ('VickyReviewer', md5('cl2um43z'), 'vicky@tom.com');
+INSERT INTO userRoles (userName, role) VALUES ('VickyReviewer', 'reviewer');
+INSERT INTO users (username, password, email) VALUES ('ReviewedApplicant', md5('cl2um43z'), 'rv@james.net');
+INSERT INTO userRoles (userName, role) VALUES ('ReviewedApplicant', 'applicant');
+INSERT INTO users (username, password, email) VALUES ('ZhanzhanReviewedApplicant', md5('cl2um43z'), 'zrv@james.net');
+INSERT INTO userRoles (userName, role) VALUES ('ZhanzhanReviewedApplicant', 'applicant');
+INSERT INTO users (username, password, email) VALUES ('JamesReviewedApplicant', md5('cl2um43z'), 'jrv@james.net');
+INSERT INTO userRoles (userName, role) VALUES ('JamesReviewedApplicant', 'applicant');
+INSERT INTO users (username, password, email) VALUES ('CommonGradedApplicant', md5('cl2um43z'), 'crv@james.net');
+INSERT INTO userRoles (userName, role) VALUES ('CommonGradedApplicant', 'applicant');
+INSERT INTO users (username, password, email) VALUES ('CommonUngradedApplicant', md5('cl2um43z'), 'cgrv@james.net');
+INSERT INTO userRoles (userName, role) VALUES ('CommonUngradedApplicant', 'applicant');
+
+INSERT INTO 
+applicants (
+	firstname, middlename, lastname, streetaddress, city, state, zipcode, countrycode, 
+	areacode, number, residencystatus, countryofcitizenship, countryofresidence, specialization,
+	applicationstatus, userid
+) VALUES (
+	'Tom', 'Z', 'He', '123 fakestreet', 'faketown', 'fakestate', 'fakezip' , '123',
+	'123', '12345', 'resident', 200, 4, 3, 'Pending', 1
+);
+
+INSERT INTO 
+applicants (
+	firstname, middlename, lastname, streetaddress, city, state, zipcode, countrycode, 
+	areacode, number, residencystatus, countryofcitizenship, countryofresidence, specialization,
+	applicationstatus, userid
+) VALUES (
+	'James', 'P', 'Carrier', '123 fakestreet', 'faketown', 'fakestate', 'fakezip' , '123',
+	'123', '12345', 'resident', 100, 7, 8, 'Pending', 2
+);
+
+INSERT INTO 
+applicants (
+	firstname, middlename, lastname, streetaddress, city, state, zipcode, countrycode, 
+	areacode, number, residencystatus, countryofcitizenship, countryofresidence, specialization,
+	applicationstatus, userid
+) VALUES (
+	'Zhanzhan', 'T', 'He', '123 fakestreet', 'faketown', 'fakestate', 'fakezip' , '123',
+	'123', '12345', 'resident', 101, 71, 9, 'Pending', 3
+);
+
+INSERT INTO 
+applicants (
+	firstname, middlename, lastname, streetaddress, city, state, zipcode, countrycode, 
+	areacode, number, residencystatus, countryofcitizenship, countryofresidence, specialization,
+	applicationstatus, userid
+) VALUES (
+	'Reviewed', 'A', 'Applicant', '123 fakestreet', 'faketown', 'fakestate', 'fakezip' , '123',
+	'123', '12345', 'resident', 17, 34, 5, 'Pending', 7
+);
+
+INSERT INTO 
+applicants (
+	firstname, middlename, lastname, streetaddress, city, state, zipcode, countrycode, 
+	areacode, number, residencystatus, countryofcitizenship, countryofresidence, specialization,
+	applicationstatus, userid
+) VALUES (
+	'Zhanzhan', 'R', 'Applicant', '123 fakestreet', 'faketown', 'fakestate', 'fakezip' , '123',
+	'123', '12345', 'resident', 18, 35, 2, 'Pending', 8
+);
+
+INSERT INTO 
+applicants (
+	firstname, middlename, lastname, streetaddress, city, state, zipcode, countrycode, 
+	areacode, number, residencystatus, countryofcitizenship, countryofresidence, specialization,
+	applicationstatus, userid
+) VALUES (
+	'James', 'R', 'Applicant', '123 fakestreet', 'faketown', 'fakestate', 'fakezip' , '123',
+	'123', '12345', 'resident', 19, 36, 1, 'Pending', 9
+);
+
+INSERT INTO 
+applicants (
+	firstname, middlename, lastname, streetaddress, city, state, zipcode, countrycode, 
+	areacode, number, residencystatus, countryofcitizenship, countryofresidence, specialization,
+	applicationstatus, userid
+) VALUES (
+	'Common', 'G', 'GradedApplicant', '123 fakestreet', 'faketown', 'fakestate', 'fakezip' , '123',
+	'123', '12345', 'resident', 19, 80, 6, 'Pending', 10
+);
+
+INSERT INTO 
+applicants (
+	firstname, middlename, lastname, streetaddress, city, state, zipcode, countrycode, 
+	areacode, number, residencystatus, countryofcitizenship, countryofresidence, specialization,
+	applicationstatus, userid
+) VALUES (
+	'Common', 'U', 'UngradedApplicant', '123 fakestreet', 'faketown', 'fakestate', 'fakezip' , '123',
+	'123', '12345', 'resident', 20, 11, 7, 'Pending', 11
+);
+
+INSERT INTO workload (reviewer, applicant) VALUES (5, 1);
+INSERT INTO workload (reviewer, applicant) VALUES (5, 2);
+INSERT INTO workload (reviewer, applicant) VALUES (6, 3);
+INSERT INTO workload (reviewer, applicant) VALUES (5, 8);
+INSERT INTO workload (reviewer, applicant) VALUES (6, 8);
+
+INSERT INTO reviews (grade, comment, reviewer, applicant) VALUES (1, 'Terrible Application', 5, 4);
+INSERT INTO reviews (grade, comment, reviewer, applicant) VALUES (2, 'OK Application', 6, 5);
+INSERT INTO reviews (grade, comment, reviewer, applicant) VALUES (4, 'Great Application', 6, 6);
+INSERT INTO reviews (grade, comment, reviewer, applicant) VALUES (3, 'Good Application', 5, 7);
+INSERT INTO reviews (grade, comment, reviewer, applicant) VALUES (4, 'Excellent Application', 6, 7);
+
+select * from applicants;
+select * from users;
+select * from userroles;
+SELECT username, COUNT(users.id) AS numUngraded
+FROM users, workload
+WHERE users.id = workload.reviewer
+GROUP BY username;
+
+SELECT ungradedApplications.username, numgraded, numungraded FROM
+	(SELECT username, COUNT(users.id) AS numGraded
+	FROM users, reviews
+	WHERE users.id = reviews.reviewer
+	GROUP BY username) AS gradedApplications
+INNER JOIN
+	(SELECT username, COUNT(users.id) AS numUngraded
+	FROM users, workload
+	WHERE users.id = workload.reviewer
+	GROUP BY username) AS ungradedApplications
+ON gradedApplications.username = ungradedApplications.username;
+
+SELECT firstname, middlename, lastname, avgGrade, applicationStatus
+FROM
+	(SELECT applicants.id AS applicantId, AVG(grade) as avgGrade
+	FROM reviews, applicants
+	WHERE applicant = applicants.id
+	GROUP BY applicants.id) AS applicantAvgGrades, 
+	applicants, 
+	reviews
+WHERE applicantAvgGrades.applicantId = applicants.id
+AND reviews.applicant = applicants.id
+AND reviews.reviewer IN
+	(SELECT id FROM users WHERE username = 'GeoffReviewer');

@@ -5,7 +5,7 @@ import javax.naming.*;
 import javax.sql.*;
 
 public class DBConnection {
-	public static Connection dbConnect() throws SQLException, ClassNotFoundException, NamingException {
+	public static Connection dbConnect() throws SQLException, NamingException {
 		//Class.forName("org.postgresql.Driver"); //load the driver
 	
 		//return DriverManager.getConnection("jdbc:postgresql://localhost/ApplicationSystem",

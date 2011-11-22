@@ -26,6 +26,12 @@
 		<action path="/myApplication" type="com.cse135project.actions.MyApplicationAction">
 			<forward name="noApplicationExists" path="/names.html" />
 		</action>
+		<action path="/applicationsByReviewer" type="com.cse135project.actions.ApplicationsByReviewerAction">
+			<forward name="success" path="/applicationsByReviewer.jsp" />
+		</action>
+		<action path="/showGradedApplications" type="com.cse135project.actions.ShowGradedApplicationsAction">
+			<forward name="success" path="/applications.jsp" />
+		</action>
 	</action-mappings>
 
 
