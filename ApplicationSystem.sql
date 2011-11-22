@@ -3987,4 +3987,11 @@ AND reviews.applicant = applicants.id
 AND reviews.reviewer IN
 	(SELECT id FROM users WHERE username = 'GeoffReviewer');
 
+SELECT applicants.id, firstname, middlename, lastname, 0 AS avgGrade, applicationStatus
+FROM workload, applicants
+WHERE workload.applicant = applicants.id
+AND workload.reviewer IN
+	(SELECT id FROM users WHERE username = 'VickyReviewer');
+
+
 /* UPDATE applicants SET applicationStatus = 'Accepted' WHERE id = 1; */

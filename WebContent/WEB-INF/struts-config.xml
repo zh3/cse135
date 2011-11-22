@@ -40,6 +40,9 @@
 		<action path="/showGradedApplications" type="com.cse135project.actions.ShowGradedApplicationsAction">
 			<forward name="success" path="/applications.jsp" />
 		</action>
+		<action path="/showUngradedApplications" type="com.cse135project.actions.ShowUngradedApplicationsAction">
+			<forward name="success" path="/applications.jsp" />
+		</action>
 		<action path="/admitApplicant" type="com.cse135project.actions.AdmitApplicantAction"
 			validate="false" scope="request" input="applications.jsp" name="applicantFormAdmit">
 			<forward name="success" path="/applications.jsp" />

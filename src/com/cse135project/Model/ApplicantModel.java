@@ -41,6 +41,13 @@ public class ApplicantModel {
 			+ "AND reviews.reviewer IN "
 			+"(SELECT id FROM users WHERE username = ?);";
 	
+	private static final String ungradedApplicantsByReviewerUsernameString
+		= "SELECT applicants.id, firstname, middlename, lastname, 0 AS avgGrade, applicationStatus "
+			+ "FROM workload, applicants "
+			+ "WHERE workload.applicant = applicants.id "
+			+ "AND workload.reviewer IN "
+			+ "(SELECT id FROM users WHERE username = ?);";
+	
 	private static final String updateApplicantByIdString
 		= "UPDATE applicants SET applicationStatus = ? WHERE id = ?;";
 	
@@ -69,6 +76,28 @@ public class ApplicantModel {
 		try {
 			Connection conn = DBConnection.dbConnect();
 			PreparedStatement pstmt = conn.prepareStatement(gradedApplicantsByReviewerUsernameString);
+			
+			pstmt.setString(1, reviewerUsername);
+			ResultSet gradedApplicantsByReviewer = pstmt.executeQuery();
+			CachedRowSet crsApplicantsByReviewer = new CachedRowSetImpl();
+			crsApplicantsByReviewer.populate(gradedApplicantsByReviewer);
+			
+			gradedApplicantsByReviewer.close();
+			pstmt.close();
+			conn.close();
+			
+			return crsApplicantsByReviewer;
+		} catch (SQLException e) {
+			throw new DataBindingException(e);
+		} catch (NamingException e) {
+			throw new DbException(e);
+		} 
+	}
+	
+	public static CachedRowSet getUngradedApplicants(String reviewerUsername) throws DbException {
+		try {
+			Connection conn = DBConnection.dbConnect();
+			PreparedStatement pstmt = conn.prepareStatement(ungradedApplicantsByReviewerUsernameString);
 			
 			pstmt.setString(1, reviewerUsername);
 			ResultSet gradedApplicantsByReviewer = pstmt.executeQuery();
