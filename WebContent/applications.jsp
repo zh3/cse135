@@ -6,8 +6,15 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>Applications</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>Applications</title>
+		<%!
+			private String getStyle(String buttonDisabledState, String applicationStatus) {
+				return (buttonDisabledState.equals(applicationStatus)
+						? "display:none"
+						: "display:inline");
+			}
+		%>
 	</head>
 	<body>
 	
@@ -29,6 +36,7 @@
 				// Iterate over the RowSet
 			while (applicants.next()) {
 				String applicationStatus = applicants.getString("applicationStatus");
+				double avgGrade = applicants.getDouble("avgGrade");
 		%>
 				<tr>
 					<td>
@@ -39,23 +47,23 @@
 					</div>
 					</td>
 					<td><div style="text-align:center">
-						<%= String.format("%.4f", applicants.getDouble("avgGrade")) %>
+						<%= ((avgGrade > 0) ? String.format("%.4f", avgGrade) : "N/A") %>
 					</div></td>
 					<td><div style="text-align:center">
 						<%= applicationStatus %>
 					</div></td>
 					<td>
-						<html:form action="/admitApplicant">
+						<html:form action="/admitApplicant" style="<%=getStyle(\"Accepted\", applicationStatus)%>">
 						<html:hidden property="id" value="<%=Integer.toString(applicants.getInt(\"id\")) %>" />
 						<html:submit value="Admit" />
 						</html:form>
 						
-						<html:form action="/rejectApplicant">
+						<html:form action="/rejectApplicant" style="<%=getStyle(\"Rejected\", applicationStatus)%>">
 						<html:hidden property="id" value="<%=Integer.toString(applicants.getInt(\"id\")) %>" />
 						<html:submit value="Reject" />
 						</html:form>
 						
-						<html:form action="/cancelDecision">
+						<html:form action="/cancelDecision" style="<%=getStyle(\"Pending\", applicationStatus)%>">
 						<html:hidden property="id" value="<%=Integer.toString(applicants.getInt(\"id\")) %>" />
 						<html:submit value="Cancel Decision" />
 						</html:form>
