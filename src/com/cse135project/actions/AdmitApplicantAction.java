@@ -2,7 +2,6 @@ package com.cse135project.actions;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.sql.RowSet;
 
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;

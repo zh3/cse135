@@ -9,5 +9,7 @@
 	</head>
 	<body>
 		<html:link action="applicationsByReviewer">Applications by Reviewer</html:link>
+		<br/><html:link action="disciplineAnalytics">Discipline Analytics</html:link>
+		<br/><html:link action="specializationAnalytics">Specialization Analytics</html:link>
 	</body>
 </html>

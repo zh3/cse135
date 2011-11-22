@@ -3872,6 +3872,13 @@ applicants (
 	'123', '12345', 'resident', 200, 4, 3, 'Pending', 1
 );
 
+INSERT INTO degrees (applicant, awardMonth, awardYear, title, university, discipline, gpa)
+VALUES (1, 10, 2010, 'PhD', 10, 1, 4.0);
+INSERT INTO degrees (applicant, awardMonth, awardYear, title, university, discipline, gpa)
+VALUES (1, 10, 2010, 'MS', 11, 1, 3.0);
+INSERT INTO degrees (applicant, awardMonth, awardYear, title, university, discipline, gpa)
+VALUES (1, 10, 2010, 'BS', 23, 2, 3.0);
+
 INSERT INTO 
 applicants (
 	firstname, middlename, lastname, streetaddress, city, state, zipcode, countrycode, 
@@ -3881,6 +3888,13 @@ applicants (
 	'James', 'P', 'Carrier', '123 fakestreet', 'faketown', 'fakestate', 'fakezip' , '123',
 	'123', '12345', 'resident', 100, 7, 8, 'Pending', 2
 );
+
+INSERT INTO degrees (applicant, awardMonth, awardYear, title, university, discipline, gpa)
+VALUES (2, 10, 2010, 'PhD', 2, 3, 4.0);
+INSERT INTO degrees (applicant, awardMonth, awardYear, title, university, discipline, gpa)
+VALUES (2, 10, 2010, 'BS', 12, 2, 2.0);
+INSERT INTO degrees (applicant, awardMonth, awardYear, title, university, discipline, gpa)
+VALUES (2, 10, 2010, 'BS', 24, 2, 3.2);
 
 INSERT INTO 
 applicants (
