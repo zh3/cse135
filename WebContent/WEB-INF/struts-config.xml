@@ -11,6 +11,7 @@
 		<form-bean type="com.cse135project.forms.ApplicantFormAdmit" name="applicantFormAdmit" />
 		<form-bean type="com.cse135project.forms.ApplicantFormReject" name="applicantFormReject" />
 		<form-bean type="com.cse135project.forms.ApplicantFormCancel" name="applicantFormCancel" />
+		<form-bean type="com.cse135project.forms.ReviewFormSubmit" name="reviewFormSubmit" />
 	</form-beans>
 
 	<!-- Global Exception Definitions -->
@@ -81,7 +82,25 @@
 		<action path="/applicationReview" type="com.cse135project.actions.ApplicationReviewAction">
 			<forward name="success" path="/applicationReview.jsp" />
 		</action>
+		<action path="/submitReview" type="com.cse135project.actions.SubmitReviewAction"
+			validate="true" scope="request" input="/applicationReview.do" name="reviewFormSubmit">
+			<forward name="enoughReviews" path="/decideApplicationStatus.jsp" />
+			<forward name="notEnoughReviews" path="/suggestReviewer.jsp" />
+		</action>
+				<action path="/reviewerAdmitApplicant" type="com.cse135project.actions.ReviewerAdmitApplicantAction"
+			validate="false" scope="request" input="/decideApplicationStatus.jsp" name="applicantFormAdmit">
+			<forward name="success" path="/review.do" redirect="true" />
+		</action>
+		<action path="/reviewerRejectApplicant" type="com.cse135project.actions.ReviewerRejectApplicantAction"
+			validate="false" scope="request" input="/decideApplicationStatus.jsp" name="applicantFormReject">
+			<forward name="success" path="/review.do" redirect="true"/>
+		</action>
+		<action path="/reviewerCancelDecision" type="com.cse135project.actions.ReviewerCancelDecisionAction"
+			validate="false" scope="request" input="/decideApplicationStatus.jsp" name="applicantFormCancel">
+			<forward name="success" path="/review.do" redirect="true"/>
+		</action>
 	</action-mappings>
-
-
+	
+	<!-- Message Resources Definitions -->
+	<message-resources parameter="MessageResources" />
 </struts-config>

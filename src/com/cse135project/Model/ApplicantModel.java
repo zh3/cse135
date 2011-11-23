@@ -126,6 +126,15 @@ public class ApplicantModel {
 			+ "WHERE applicant = ? "
 			+ "AND reviewer = users.id;";
 	
+	private static final String reviewerIdString
+		= "SELECT id FROM users WHERE username = ?";
+	
+	private static final String addReviewString
+		= "INSERT INTO reviews (grade, comment, reviewer, applicant) VALUES (?, ?, ?, ?);";
+	
+	private static final String removeFromWorkloadString
+		= "DELETE FROM workload WHERE reviewer = ? AND applicant = ?";
+	
 	public static CachedRowSet getApplicantsByReviewer() throws DbException {
 		try {
 			Connection conn = DBConnection.dbConnect();
@@ -389,5 +398,58 @@ public class ApplicantModel {
 		} catch (NamingException e) {
 			throw new DbException(e);
 		} 
+	}
+	
+	public static int getReviewerId(String username) 
+			throws DbException {
+		try {
+			Connection conn = DBConnection.dbConnect();
+			PreparedStatement pstmt = conn.prepareStatement(reviewerIdString);
+			
+			pstmt.setString(1, username);
+			ResultSet reviewerIdSet = pstmt.executeQuery();
+			
+			int reviewerId = -1;
+			if (reviewerIdSet.next()) {
+				reviewerId = reviewerIdSet.getInt("id");
+			}
+			
+			reviewerIdSet.close();
+			pstmt.close();
+			conn.close();
+			
+			return reviewerId;
+		} catch (SQLException e) {
+			throw new DataBindingException(e);
+		} catch (NamingException e) {
+			throw new DbException(e);
+		} 
+	}
+	
+	public static void addReview(int grade, String comment, int reviewerId, 
+			int applicantId) throws DbException {
+		try {
+			Connection conn = DBConnection.dbConnect();
+			PreparedStatement pstmt = conn.prepareStatement(addReviewString);
+			
+			pstmt.setInt(1, grade);
+			pstmt.setString(2, comment);
+			pstmt.setInt(3, reviewerId);
+			pstmt.setInt(4, applicantId);
+			pstmt.executeUpdate();
+
+			pstmt.close(); 
+			
+			pstmt = conn.prepareStatement(removeFromWorkloadString);
+			pstmt.setInt(1, reviewerId);
+			pstmt.setInt(2, applicantId);
+			pstmt.executeUpdate();
+			
+			conn.close();
+		} catch (SQLException e) {
+			throw new DataBindingException(e);
+		} catch (NamingException e) {
+			throw new DbException(e);
+		}
 	}
 }

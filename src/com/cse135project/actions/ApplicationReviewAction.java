@@ -17,12 +17,22 @@ public class ApplicationReviewAction extends Action {
 			HttpServletRequest request, HttpServletResponse response)
 			throws DbException {
 		String applicantIdString = (String) request.getParameter("applicantId");
-		int applicantId = Integer.parseInt(applicantIdString);
+		if (applicantIdString == null) {
+			applicantIdString 
+				= Integer.toString((Integer) request.getSession().getAttribute("applicantId"));
+		}
+		
+		Integer applicantId = Integer.parseInt(applicantIdString);
+		Integer reviewerId 
+			= ApplicantModel.getReviewerId(request.getUserPrincipal().getName());
 		
 		RowSet applicant = ApplicantModel.getApplicantWithId(applicantId);
 		RowSet applicantDegrees = ApplicantModel.getApplicantDegrees(applicantId);
 		RowSet applicantReviews = ApplicantModel.getApplicantReviews(applicantId);
 		
+		
+		request.getSession().setAttribute("applicantId", applicantId);
+		request.setAttribute("reviewerId", reviewerId);
 		request.setAttribute("applicant", applicant);
 		request.setAttribute("degrees", applicantDegrees);
 		request.setAttribute("reviews", applicantReviews);

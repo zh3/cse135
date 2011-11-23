@@ -3991,7 +3991,6 @@ INSERT INTO reviews (grade, comment, reviewer, applicant) VALUES (2, 'OK Applica
 INSERT INTO reviews (grade, comment, reviewer, applicant) VALUES (4, 'Great Application', 6, 6);
 INSERT INTO reviews (grade, comment, reviewer, applicant) VALUES (3, 'Good Application', 5, 7);
 INSERT INTO reviews (grade, comment, reviewer, applicant) VALUES (4, 'Excellent Application', 6, 7);
-INSERT INTO reviews (grade, comment, reviewer, applicant) VALUES (4, 'What an Application', 5, 8);
 
 select * from applicants;
 select * from users;
@@ -4101,3 +4100,7 @@ SELECT grade, comment, users.username
 FROM reviews, users 
 WHERE applicant = '7'
 AND reviewer = users.id;
+
+SELECT * FROM reviews;
+SELECT * FROM workload ;
+SELECT * FROM applicants;

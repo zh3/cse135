@@ -1,6 +1,8 @@
 <%@ page import="javax.sql.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
@@ -10,9 +12,14 @@
 			RowSet applicant = (RowSet) request.getAttribute("applicant");
 			RowSet degrees = (RowSet) request.getAttribute("degrees");
 			RowSet reviews = (RowSet) request.getAttribute("reviews");
+			Integer reviewerId = (Integer) request.getAttribute("reviewerId");
+			Integer applicantId = (Integer) session.getAttribute("applicantId");
 		%>
 	</head>
 	<body>
+		<!-- in case validation of the entry data fails in the data bean -->
+		<html:errors />
+		
 		<h3>Application Review</h3>
 		
 		<% if (applicant.next()) { %>
@@ -46,6 +53,8 @@
 			<% } %>
 			
 			<p> <b>Specialization </b> <%= applicant.getString("specialization") %> </p>
+			
+			<p> <b>Application Status </b> <%= applicant.getString("applicationStatus") %> </p>
 		<% } %>
 		
 		<h3>Applicant Degrees</h3>
@@ -82,5 +91,18 @@
 			</div>
 			<br/>
 		<% } %>
+		
+		<div>
+			<h3>Submit Review</h3>
+			<html:form action="/submitReview">
+				<html:hidden property="applicant" value="<%= Integer.toString(applicantId) %>"/>
+				<html:hidden property="reviewer" value="<%= Integer.toString(reviewerId) %>"/>
+				<b>Grade </b><html:text property="grade" size="4" value=""/>
+				<br/><b>Comment</b>
+				<br/><html:textarea property="comment" cols="50" rows="5"/>
+				<br/><html:submit value="Submit" />
+				<html:reset />
+			</html:form>
+		</div>
 	</body>
 </html>

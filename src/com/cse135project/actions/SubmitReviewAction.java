@@ -2,7 +2,6 @@ package com.cse135project.actions;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.sql.RowSet;
 
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
@@ -10,18 +9,17 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import com.cse135project.Model.ApplicantModel;
-import com.cse135project.db.DbException;
+import com.cse135project.forms.ReviewFormSubmit;
 
-public class ReviewAction extends Action {
+public class SubmitReviewAction extends Action {
 	public ActionForward execute(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) 
-					throws DbException {
-		String username = request.getUserPrincipal().getName();
+					throws Exception {
+		ReviewFormSubmit reviewForm = (ReviewFormSubmit) form;
+		ApplicantModel.addReview(reviewForm.getGrade(), reviewForm.getComment(), 
+				reviewForm.getReviewer(), reviewForm.getApplicant());
 		
-		RowSet applicantsByReviewer = ApplicantModel.getUngradedApplicants(username);
-		
-		
-		request.setAttribute("applicantsByReviewer", applicantsByReviewer);
-		return mapping.findForward("success");
+		request.setAttribute("applicantId", reviewForm.getApplicant());
+		return mapping.findForward("enoughReviews");
 	}
 }
