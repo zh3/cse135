@@ -31,9 +31,13 @@
 	<!-- Action Mapping Definitions -->
 
 	<action-mappings>
+	
+		
 		<action path="/myApplication" type="com.cse135project.actions.MyApplicationAction">
 			<forward name="noApplicationExists" path="/names.html" />
 		</action>
+		
+		<!-- Case 2 Actions -->
 		<action path="/disciplineAnalytics" type="com.cse135project.actions.DisciplineAnalyticsAction">
 			<forward name="success" path="/disciplineAnalytics.jsp" />
 		</action>
@@ -68,6 +72,14 @@
 		<action path="/showSpecializationApplications" type="com.cse135project.actions.ShowSpecializationApplicationsAction"
 			validate="false" scope="request" input="applications.jsp" name="applicantFormCancel">
 			<forward name="success" path="/applications.jsp" />
+		</action>
+		
+		<!-- Reviewer Loop Mappings -->
+		<action path="/review" type="com.cse135project.actions.ReviewAction">
+			<forward name="success" path="/reviewerHome.jsp" />
+		</action>
+		<action path="/applicationReview" type="com.cse135project.actions.ApplicationReviewAction">
+			<forward name="success" path="/applicationReview.jsp" />
 		</action>
 	</action-mappings>
 

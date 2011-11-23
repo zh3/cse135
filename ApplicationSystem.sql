@@ -3991,6 +3991,7 @@ INSERT INTO reviews (grade, comment, reviewer, applicant) VALUES (2, 'OK Applica
 INSERT INTO reviews (grade, comment, reviewer, applicant) VALUES (4, 'Great Application', 6, 6);
 INSERT INTO reviews (grade, comment, reviewer, applicant) VALUES (3, 'Good Application', 5, 7);
 INSERT INTO reviews (grade, comment, reviewer, applicant) VALUES (4, 'Excellent Application', 6, 7);
+INSERT INTO reviews (grade, comment, reviewer, applicant) VALUES (4, 'What an Application', 5, 8);
 
 select * from applicants;
 select * from users;
@@ -4056,5 +4057,47 @@ applicants t, degrees s
 WHERE t.ID = s.applicant AND s.discipline = 4)
 GROUP BY id, firstname, middlename, lastname, applicationStatus;
 
-
+SELECT id, firstname, middlename, lastname, SUM(avgGrade) AS avgGrade, applicationStatus
+FROM
+(SELECT applicants.id, firstname, middlename, lastname, 0 AS avgGrade, applicationStatus
+FROM workload, applicants
+WHERE workload.applicant = applicants.id
+UNION
+SELECT applicants.id, firstname, middlename, lastname, avgGrade, applicationStatus
+FROM
+	(SELECT applicants.id AS applicantId, AVG(grade) as avgGrade
+	FROM reviews, applicants
+	WHERE applicant = applicants.id
+	GROUP BY applicants.id) AS applicantAvgGrades, 
+	applicants, 
+	reviews
+WHERE applicantAvgGrades.applicantId = applicants.id
+AND reviews.applicant = applicants.id) AS applicantsWithAvgGrade
+WHERE applicantsWithAvgGrade.id IN
+((SELECT DISTINCT id FROM applicants WHERE specialization = 1))
+GROUP BY id, firstname, middlename, lastname, applicationStatus;
 /* UPDATE applicants SET applicationStatus = 'Accepted' WHERE id = 1; */
+
+SELECT * FROM specializations;
+
+SELECT DISTINCT firstname, middlename, lastname, streetaddress, city, state, zipcode, countrycode, 
+	areacode, number, residencystatus, c1.name AS countryOfCitizenship, c2.name AS countryOfResidence, 
+	specializations.name, applicationstatus
+FROM applicants, countries AS c1, countries AS c2, specializations
+WHERE applicants.id = 2 
+AND c1.id = countryOfCitizenship
+AND c2.id = countryOfResidence
+AND specialization = specializations.id;
+
+SELECT * FROM universities;
+
+SELECT awardMonth, awardYear, title, universities.name, location, disciplines.name AS discipline, gpa
+FROM degrees, universities, disciplines 
+WHERE applicant = 2
+AND discipline = disciplines.id
+AND university = universities.id;
+
+SELECT grade, comment, users.username 
+FROM reviews, users 
+WHERE applicant = '7'
+AND reviewer = users.id;

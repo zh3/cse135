@@ -102,6 +102,30 @@ public class ApplicantModel {
 			+ "(SELECT DISTINCT id FROM applicants WHERE specialization = ?) "
 			+ "GROUP BY id, firstname, middlename, lastname, applicationStatus;";
 	
+	private static final String applicantWithIdString
+		= "SELECT DISTINCT firstname, middlename, lastname, streetAddress, city, state, zipCode, countryCode, "
+				+ "areaCode, number, residencyStatus, c1.name AS countryOfCitizenship, c2.name AS countryOfResidence, " 
+				+ "specializations.name AS specialization, applicationstatus "
+			+ "FROM applicants, countries AS c1, countries AS c2, specializations "
+			+ "WHERE applicants.id = ? "
+			+ "AND c1.id = countryOfCitizenship "
+			+ "AND c2.id = countryOfResidence "
+			+ "AND specialization = specializations.id;";
+	
+	private static final String applicantDegreesString
+		= "SELECT awardMonth, awardYear, title, universities.name AS university, "
+			+ "location, disciplines.name AS discipline, gpa "
+			+ "FROM degrees, universities, disciplines "
+			+ "WHERE applicant = ? "
+			+ "AND discipline = disciplines.id "
+		  	+ "AND university = universities.id;";
+	
+	private static final String applicantReviewsString
+		= "SELECT grade, comment, users.username "
+			+ "FROM reviews, users "
+			+ "WHERE applicant = ? "
+			+ "AND reviewer = users.id;";
+	
 	public static CachedRowSet getApplicantsByReviewer() throws DbException {
 		try {
 			Connection conn = DBConnection.dbConnect();
@@ -291,6 +315,75 @@ public class ApplicantModel {
 			conn.close();
 			
 			return disciplineName;
+		} catch (SQLException e) {
+			throw new DataBindingException(e);
+		} catch (NamingException e) {
+			throw new DbException(e);
+		} 
+	}
+	
+	public static CachedRowSet getApplicantWithId(int applicantId) 
+			throws DbException {
+		try {
+			Connection conn = DBConnection.dbConnect();
+			PreparedStatement pstmt = conn.prepareStatement(applicantWithIdString);
+			
+			pstmt.setInt(1, applicantId);
+			ResultSet applicantByIdSet = pstmt.executeQuery();
+			CachedRowSet applicantWithId = new CachedRowSetImpl();
+			applicantWithId.populate(applicantByIdSet);
+			
+			applicantByIdSet.close();
+			pstmt.close();
+			conn.close();
+			
+			return applicantWithId;
+		} catch (SQLException e) {
+			throw new DataBindingException(e);
+		} catch (NamingException e) {
+			throw new DbException(e);
+		} 
+	}
+	
+	public static CachedRowSet getApplicantDegrees(int applicantId) 
+			throws DbException {
+		try {
+			Connection conn = DBConnection.dbConnect();
+			PreparedStatement pstmt = conn.prepareStatement(applicantDegreesString);
+			
+			pstmt.setInt(1, applicantId);
+			ResultSet applicantDegreesSet = pstmt.executeQuery();
+			CachedRowSet applicantDegrees = new CachedRowSetImpl();
+			applicantDegrees.populate(applicantDegreesSet);
+			
+			applicantDegreesSet.close();
+			pstmt.close();
+			conn.close();
+			
+			return applicantDegrees;
+		} catch (SQLException e) {
+			throw new DataBindingException(e);
+		} catch (NamingException e) {
+			throw new DbException(e);
+		} 
+	}
+	
+	public static CachedRowSet getApplicantReviews(int applicantId) 
+			throws DbException {
+		try {
+			Connection conn = DBConnection.dbConnect();
+			PreparedStatement pstmt = conn.prepareStatement(applicantReviewsString);
+			
+			pstmt.setInt(1, applicantId);
+			ResultSet applicantDegreesSet = pstmt.executeQuery();
+			CachedRowSet applicantDegrees = new CachedRowSetImpl();
+			applicantDegrees.populate(applicantDegreesSet);
+			
+			applicantDegreesSet.close();
+			pstmt.close();
+			conn.close();
+			
+			return applicantDegrees;
 		} catch (SQLException e) {
 			throw new DataBindingException(e);
 		} catch (NamingException e) {

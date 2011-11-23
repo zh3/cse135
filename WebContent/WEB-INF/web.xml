@@ -98,6 +98,20 @@
     	<transport-guarantee>CONFIDENTIAL</transport-guarantee>
     </user-data-constraint>
   </security-constraint>
+  
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>Reviewer Area</web-resource-name>
+      <!-- Define the context-relative URL(s) to be protected -->
+      <url-pattern>/review.do</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>reviewer</role-name>
+    </auth-constraint>
+    <user-data-constraint>
+    	<transport-guarantee>CONFIDENTIAL</transport-guarantee>
+    </user-data-constraint>
+  </security-constraint>
 
   <!-- Login configuration uses form-based authentication -->
   <login-config>
