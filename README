@@ -42,3 +42,13 @@ Added an admission status to the application which will indicate if
 the candidate is 'accepted' 'rejected' or 'pending;
 
 Attached a reference to a user to applications.
+
+Phase 5 Implementation:
+Implemented phase 5 with MVC architecture as closely following the diagrams
+in part 4. Some minor changes - some jsps called by multiple pages were
+populated by a certain .do action. Other actions requiring these jsps called
+the .do actions instead. 
+
+Most of the links to struts actions work by passing a parameter to the action.
+More complicated forms and submit buttons use the form beans detailed in the
+notes.
