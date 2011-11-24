@@ -4119,3 +4119,5 @@ id IN (
 )
 AND id NOT IN (SELECT reviewer FROM reviews WHERE applicant = 6)
 AND id NOT IN (SELECT reviewer FROM workload WHERE applicant = 6);
+
+SELECT * FROM applicants, users WHERE applicants.userId = users.id AND username = 'TomApplicant';

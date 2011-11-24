@@ -149,6 +149,8 @@ public class ApplicantModel {
 	
 	private static final String addApplicantToReviewerWorkloadString
 		= "INSERT INTO workload (reviewer, applicant) VALUES (?, ?)";
+	private static final String getApplicationForUserString
+		= "SELECT * FROM applicants, users WHERE applicants.userId = users.id AND username = ?";
 	
 	public static CachedRowSet getApplicantsByReviewer() throws DbException {
 		try {
@@ -458,6 +460,30 @@ public class ApplicantModel {
 		} 
 	}
 	
+	public static CachedRowSet getApplication(String username) 
+			throws DbException {
+		try {
+			Connection conn = DBConnection.dbConnect();
+			PreparedStatement pstmt = conn.prepareStatement(getApplicationForUserString);
+			
+			pstmt.setString(1, username);
+			ResultSet applicationSet = pstmt.executeQuery();
+			
+			CachedRowSet application = new CachedRowSetImpl();
+			application.populate(applicationSet);
+			
+			applicationSet.close();
+			pstmt.close();
+			conn.close();
+			
+			return application;
+		} catch (SQLException e) {
+			throw new DataBindingException(e);
+		} catch (NamingException e) {
+			throw new DbException(e);
+		} 
+	}
+	
 	public static int getNumApplicantReviews(int applicantId) 
 			throws DbException {
 		try {
@@ -506,6 +532,28 @@ public class ApplicantModel {
 			conn.close();
 			
 			return reviewerId;
+		} catch (SQLException e) {
+			throw new DataBindingException(e);
+		} catch (NamingException e) {
+			throw new DbException(e);
+		} 
+	}
+	
+	public static boolean applicationExists(String username) 
+			throws DbException {
+		try {
+			Connection conn = DBConnection.dbConnect();
+			PreparedStatement pstmt = conn.prepareStatement(getApplicationForUserString);
+			
+			pstmt.setString(1, username);
+			ResultSet applicationSet = pstmt.executeQuery();
+			
+			boolean applicationExists = applicationSet.next();
+			applicationSet.close();
+			pstmt.close();
+			conn.close();
+			
+			return applicationExists;
 		} catch (SQLException e) {
 			throw new DataBindingException(e);
 		} catch (NamingException e) {

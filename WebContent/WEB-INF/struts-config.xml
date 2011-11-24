@@ -36,6 +36,7 @@
 	
 		
 		<action path="/myApplication" type="com.cse135project.actions.MyApplicationAction">
+			<forward name="applicationExists" path="/yourApplication.jsp" />
 			<forward name="noApplicationExists" path="/names.html" />
 		</action>
 		
