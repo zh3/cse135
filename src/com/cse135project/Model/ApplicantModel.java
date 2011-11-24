@@ -135,6 +135,21 @@ public class ApplicantModel {
 	private static final String removeFromWorkloadString
 		= "DELETE FROM workload WHERE reviewer = ? AND applicant = ?";
 	
+	private static final String unassociatedReviewersString
+		= "SELECT * FROM users "
+			+ "WHERE "
+			+ "id IN ( "
+				+ "SELECT users.id "
+				+ "FROM users, userroles "
+				+ "WHERE users.username = userroles.username "
+				+ "AND userroles.role = 'reviewer'"
+			+ ") "
+			+ "AND id NOT IN (SELECT reviewer FROM reviews WHERE applicant = ?) " 
+			+ "AND id NOT IN (SELECT reviewer FROM workload WHERE applicant = ?);";
+	
+	private static final String addApplicantToReviewerWorkloadString
+		= "INSERT INTO workload (reviewer, applicant) VALUES (?, ?)";
+	
 	public static CachedRowSet getApplicantsByReviewer() throws DbException {
 		try {
 			Connection conn = DBConnection.dbConnect();
@@ -219,6 +234,25 @@ public class ApplicantModel {
 			PreparedStatement pstmt = conn.prepareStatement(updateApplicantByIdString);
 			
 			pstmt.setString(1, newStatus);
+			pstmt.setInt(2, applicantId);
+			pstmt.executeUpdate();
+
+			pstmt.close();
+			conn.close();
+		} catch (SQLException e) {
+			throw new DataBindingException(e);
+		} catch (NamingException e) {
+			throw new DbException(e);
+		}
+	}
+	
+	public static void addApplicantToReviewerWorkload(int reviewerId, 
+			int applicantId) throws DbException {
+		try {
+			Connection conn = DBConnection.dbConnect();
+			PreparedStatement pstmt = conn.prepareStatement(addApplicantToReviewerWorkloadString);
+			
+			pstmt.setInt(1, reviewerId);
 			pstmt.setInt(2, applicantId);
 			pstmt.executeUpdate();
 
@@ -393,6 +427,59 @@ public class ApplicantModel {
 			conn.close();
 			
 			return applicantDegrees;
+		} catch (SQLException e) {
+			throw new DataBindingException(e);
+		} catch (NamingException e) {
+			throw new DbException(e);
+		} 
+	}
+	
+	public static CachedRowSet getUnassociatedReviewers(int applicantId) 
+			throws DbException {
+		try {
+			Connection conn = DBConnection.dbConnect();
+			PreparedStatement pstmt = conn.prepareStatement(unassociatedReviewersString);
+			
+			pstmt.setInt(1, applicantId);
+			pstmt.setInt(2, applicantId);
+			ResultSet unassociatedreviewersSet = pstmt.executeQuery();
+			CachedRowSet unassociatedReviewers = new CachedRowSetImpl();
+			unassociatedReviewers.populate(unassociatedreviewersSet);
+			
+			unassociatedreviewersSet.close();
+			pstmt.close();
+			conn.close();
+			
+			return unassociatedReviewers;
+		} catch (SQLException e) {
+			throw new DataBindingException(e);
+		} catch (NamingException e) {
+			throw new DbException(e);
+		} 
+	}
+	
+	public static int getNumApplicantReviews(int applicantId) 
+			throws DbException {
+		try {
+			int reviewCount = -1;
+			Connection conn = DBConnection.dbConnect();
+			PreparedStatement pstmt = conn.prepareStatement(
+					"SELECT COUNT(grade) AS numReviews FROM (" 
+					+ applicantReviewsString.substring(0, applicantReviewsString.length() - 1)
+					+ ") AS applicantReviews");
+			
+			pstmt.setInt(1, applicantId);
+			ResultSet applicantCountSet = pstmt.executeQuery();
+			
+			if (applicantCountSet.next()) {
+				reviewCount = applicantCountSet.getInt("numReviews");
+			}
+			
+			applicantCountSet.close();
+			pstmt.close();
+			conn.close();
+			
+			return reviewCount;
 		} catch (SQLException e) {
 			throw new DataBindingException(e);
 		} catch (NamingException e) {

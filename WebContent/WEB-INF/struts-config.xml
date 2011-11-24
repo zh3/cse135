@@ -12,6 +12,7 @@
 		<form-bean type="com.cse135project.forms.ApplicantFormReject" name="applicantFormReject" />
 		<form-bean type="com.cse135project.forms.ApplicantFormCancel" name="applicantFormCancel" />
 		<form-bean type="com.cse135project.forms.ReviewFormSubmit" name="reviewFormSubmit" />
+		<form-bean type="com.cse135project.forms.AddReviewerToApplicantForm" name="addReviewerToApplicantForm" />
 	</form-beans>
 
 	<!-- Global Exception Definitions -->
@@ -97,6 +98,10 @@
 		</action>
 		<action path="/reviewerCancelDecision" type="com.cse135project.actions.ReviewerCancelDecisionAction"
 			validate="false" scope="request" input="/decideApplicationStatus.jsp" name="applicantFormCancel">
+			<forward name="success" path="/review.do" redirect="true"/>
+		</action>
+		<action path="/addReviewerToApplicant" type="com.cse135project.actions.AddReviewerToApplicantAction"
+			validate="false" scope="request" input="/suggestReviewer.jsp" name="addReviewerToApplicantForm">
 			<forward name="success" path="/review.do" redirect="true"/>
 		</action>
 	</action-mappings>

@@ -3861,6 +3861,8 @@ INSERT INTO users (username, password, email) VALUES ('CommonGradedApplicant', m
 INSERT INTO userRoles (userName, role) VALUES ('CommonGradedApplicant', 'applicant');
 INSERT INTO users (username, password, email) VALUES ('CommonUngradedApplicant', md5('cl2um43z'), 'cgrv@james.net');
 INSERT INTO userRoles (userName, role) VALUES ('CommonUngradedApplicant', 'applicant');
+INSERT INTO users (username, password, email) VALUES ('YannisReviewer', md5('cl2um43z'), 'yannis@tom.com');
+INSERT INTO userRoles (userName, role) VALUES ('YannisReviewer', 'reviewer');
 
 INSERT INTO 
 applicants (
@@ -4104,3 +4106,16 @@ AND reviewer = users.id;
 SELECT * FROM reviews;
 SELECT * FROM workload ;
 SELECT * FROM applicants;
+
+SELECT * FROM reviews;
+
+SELECT * FROM users
+WHERE
+id IN (
+	SELECT users.id 
+	FROM users, userroles 
+	WHERE users.username = userroles.username
+	AND userroles.role = 'reviewer'
+)
+AND id NOT IN (SELECT reviewer FROM reviews WHERE applicant = 6)
+AND id NOT IN (SELECT reviewer FROM workload WHERE applicant = 6);
