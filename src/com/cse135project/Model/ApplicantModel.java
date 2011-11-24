@@ -469,14 +469,42 @@ public class ApplicantModel {
 			pstmt.setString(1, username);
 			ResultSet applicationSet = pstmt.executeQuery();
 			
-			CachedRowSet application = new CachedRowSetImpl();
-			application.populate(applicationSet);
+			int applicantId = -1;
+			if (applicationSet.next()) {
+				applicantId = applicationSet.getInt("id");
+			}
 			
 			applicationSet.close();
 			pstmt.close();
 			conn.close();
 			
-			return application;
+			return getApplicantWithId(applicantId);
+		} catch (SQLException e) {
+			throw new DataBindingException(e);
+		} catch (NamingException e) {
+			throw new DbException(e);
+		} 
+	}
+	
+	public static CachedRowSet getApplicantDegrees(String username) 
+			throws DbException {
+		try {
+			Connection conn = DBConnection.dbConnect();
+			PreparedStatement pstmt = conn.prepareStatement(getApplicationForUserString);
+			
+			pstmt.setString(1, username);
+			ResultSet applicationSet = pstmt.executeQuery();
+			
+			int applicantId = -1;
+			if (applicationSet.next()) {
+				applicantId = applicationSet.getInt("id");
+			}
+			
+			applicationSet.close();
+			pstmt.close();
+			conn.close();
+			
+			return getApplicantDegrees(applicantId);
 		} catch (SQLException e) {
 			throw new DataBindingException(e);
 		} catch (NamingException e) {

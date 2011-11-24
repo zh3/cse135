@@ -20,7 +20,10 @@ public class MyApplicationAction extends Action {
 		
 		if (ApplicantModel.applicationExists(username)) {
 			RowSet application = ApplicantModel.getApplication(username);
+			RowSet degrees = ApplicantModel.getApplicantDegrees(username);
+			
 			request.setAttribute("applicant", application);
+			request.setAttribute("degrees", degrees);
 			return mapping.findForward("applicationExists");
 		} else {
 			return mapping.findForward("noApplicationExists");
