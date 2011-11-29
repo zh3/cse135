@@ -49,6 +49,18 @@ in part 4. Some minor changes - some jsps called by multiple pages were
 populated by a certain .do action. Other actions requiring these jsps called
 the .do actions instead. 
 
-Most of the links to struts actions work by passing a parameter to the action.
-More complicated forms and submit buttons use the form beans detailed in the
-notes.
+Most of the links to struts actions work by passing a parameter to 
+the action.
+More complicated forms and submit buttons use the form beans detailed in the notes.
+
+Phase 6 Implementation:
+Implemented checking for existing universities using AJAX to load a
+page containing a single XML element containing a string which is "true" if the university exists and "false" otherwise. Used HTML and
+CSS properties for appropriate error messages to be visible and
+buttons to be enabled on the right inputs.
+
+Implemented showing and hiding applications for the chair using a
+similar page to the reviewers page for reviewing an application.
+This returns simple HTML which replaces the text in an initially
+empty div.
+the university sent 
