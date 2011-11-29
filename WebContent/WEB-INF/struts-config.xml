@@ -111,6 +111,9 @@
 		<action path="/universityExists" type="com.cse135project.actions.UniversityExistsAction">
 			<forward name="success" path="/universityExistsXML.jsp" />
 		</action>
+		<action path="/showCompleteApplication" type="com.cse135project.actions.ShowCompleteApplicationAction">
+			<forward name="success" path="/showCompleteApplication.jsp" />
+		</action>
 	</action-mappings>
 	
 	<!-- Message Resources Definitions -->

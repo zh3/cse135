@@ -7,6 +7,37 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		
+		<script type="text/javascript">
+			var previousClickedButton;
+		
+			function loadApplication(id, button) {
+				if (previousClickedButton == button) {
+					button.innerHTML = "Show Application";
+					document.getElementById("showApplicationArea").innerHTML = "";
+					
+					previousClickedButton = undefined;
+				} else {
+					button.innerHTML = "Hide Application";
+					var xmlHttp = new XMLHttpRequest();
+					var url = "showCompleteApplication.do?applicantId=" + id;
+					xmlHttp.onreadystatechange = function() {
+						if (xmlHttp.readyState==4) {
+							document.getElementById("showApplicationArea").innerHTML = xmlHttp.responseText;
+						}
+					};
+					
+					if (previousClickedButton != undefined) {
+						previousClickedButton.innerHTML = "Show Application";
+					}
+					
+					previousClickedButton = button;
+					xmlHttp.open("GET", url, true);
+					xmlHttp.send(null);
+				}
+			}
+		</script>
+		
 		<title>Applications</title>
 		<%!
 			private String getStyle(String buttonDisabledState, String applicationStatus) {
@@ -67,11 +98,17 @@
 						<html:hidden property="id" value="<%=Integer.toString(applicants.getInt(\"id\")) %>" />
 						<html:submit value="Cancel Decision" />
 						</html:form>
+						
+						<button type="button" onclick="loadApplication(<%=Integer.toString(applicants.getInt("id")) %>, this)">
+							Show Application
+						</button>
 					</td>
 				</tr>
 		<% } %>
-		
 		</table>
+		
+		<div id="showApplicationArea">
+		</div>
 		
 		<h4>Navigation</h4>
 		<%@ include file="reviewHub.jsp" %>
