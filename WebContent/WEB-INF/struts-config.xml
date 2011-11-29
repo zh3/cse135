@@ -27,6 +27,7 @@
 
 	<global-forwards>
 		<forward name="myApplication" path="/myApplication.do" />
+		<forward name="universityExists" path="/universityExists.do" />
 	</global-forwards>
 
 
@@ -104,6 +105,11 @@
 		<action path="/addReviewerToApplicant" type="com.cse135project.actions.AddReviewerToApplicantAction"
 			validate="false" scope="request" input="/suggestReviewer.jsp" name="addReviewerToApplicantForm">
 			<forward name="success" path="/review.do" redirect="true"/>
+		</action>
+		
+		<!-- Ajax Actions -->
+		<action path="/universityExists" type="com.cse135project.actions.UniversityExistsAction">
+			<forward name="success" path="/universityExistsXML.jsp" />
 		</action>
 	</action-mappings>
 	

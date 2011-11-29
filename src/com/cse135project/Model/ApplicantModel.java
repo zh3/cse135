@@ -152,6 +152,11 @@ public class ApplicantModel {
 	private static final String getApplicationForUserString
 		= "SELECT * FROM applicants, users WHERE applicants.userId = users.id AND username = ?";
 	
+	private static final String universityExistsString 
+		= "SELECT name FROM "
+		    + "(SELECT LOWER(name) AS name FROM universities) AS universityNames "
+		    + "WHERE name = LOWER(?);";
+	
 	public static CachedRowSet getApplicantsByReviewer() throws DbException {
 		try {
 			Connection conn = DBConnection.dbConnect();
@@ -582,6 +587,28 @@ public class ApplicantModel {
 			conn.close();
 			
 			return applicationExists;
+		} catch (SQLException e) {
+			throw new DataBindingException(e);
+		} catch (NamingException e) {
+			throw new DbException(e);
+		} 
+	}
+	
+	public static boolean universityExists(String name) 
+			throws DbException {
+		try {
+			Connection conn = DBConnection.dbConnect();
+			PreparedStatement pstmt = conn.prepareStatement(universityExistsString);
+			
+			pstmt.setString(1, name);
+			ResultSet universitySet = pstmt.executeQuery();
+			
+			boolean universityExists = universitySet.next();
+			universitySet.close();
+			pstmt.close();
+			conn.close();
+			
+			return universityExists;
 		} catch (SQLException e) {
 			throw new DataBindingException(e);
 		} catch (NamingException e) {

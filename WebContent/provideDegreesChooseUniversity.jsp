@@ -6,6 +6,62 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		
+		<script type="text/javascript">
+			function enableSubmit() {
+				document.getElementById("submit").disabled = false;
+			}
+			
+			function disableSubmit() {
+				document.getElementById("submit").disabled = true;
+			}
+			
+			function showAlreadyExistsMessage() {
+				document.getElementById("alreadyExistsMessage").style.display = 'inline';
+			}
+			
+			function hideAlreadyExistsMessage() {
+				document.getElementById("alreadyExistsMessage").style.display = 'none';
+			}
+			
+			
+		
+			function validateUniversity() {
+				var universityName = document.getElementsByName("newUniversity")[0].value;
+				
+				var xmlHttp = new XMLHttpRequest();
+				var url = "universityExists.do?universityName=" + universityName;
+				xmlHttp.onreadystatechange = function() {
+					if (xmlHttp.readyState==4) {
+						var xmlDoc = xmlHttp.responseXML.documentElement;
+						
+						var inputValid = true;
+						if (xmlDoc.getElementsByTagName("exists")[0].childNodes[0].nodeValue
+								== 'true') {
+							showAlreadyExistsMessage();
+							inputValid = false;
+						} else {
+							hideAlreadyExistsMessage();
+
+						}
+						
+						if (universityName == "") {
+							inputValid = false;
+						}
+						
+						if (inputValid) {
+							enableSubmit();
+						} else {
+							disableSubmit();
+						}
+					}
+				}
+				
+				xmlHttp.open("GET", url, true);
+				xmlHttp.send(null);
+			}
+		</script>
+		
 		<title>Provide Degrees - Choose University</title>
 		<!-- Set the attribute for chosen Country or State id and
 		   Get the university list for that chosen country or state  -->
@@ -19,10 +75,15 @@
 		<!-- Provide an option for the user to add his or her own university. -->
 		 
 		<form action= "provideDegreesChooseDiscipline.jsp?chosenUniversityId=<%= -1/*universityList.size()*/ %>" method="POST">
-			Don't see your university? Enter here:  <input type="text" size="10" name="newUniversity"/>
+			Don't see your university? Enter here:  
+			<input id="newUniversity" type="text" size="10" name="newUniversity" onkeyup="validateUniversity();"/>
 			<input type="hidden" name="newUniversityLocation" value="<%=location %>"/>
-			<input type= "submit" value="Submit"/>
+			<input id="submit" type= "submit" value="Submit" disabled="disabled"/>
 		</form>
+		
+		<div id="alreadyExistsMessage" style="display:none;color:red">
+			The entered university already exists
+		</div>
 
 		<!-- print out a 3-column table of all the universities for that chosen country or state -->
 		<table>
