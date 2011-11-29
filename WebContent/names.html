@@ -1,11 +1,82 @@
 <html>
+<head>
+	<script type="text/javascript">
+		function enableSubmit() {
+			document.getElementById("submit").disabled = false;
+		}
+		
+		function disableSubmit() {
+			document.getElementById("submit").disabled = true;
+		}
+		
+		function showLettersOnlyMessage() {
+			document.getElementById("lettersOnlyMessage").style.display = 'inline';
+		}
+		
+		function hideLettersOnlyMessage() {
+			document.getElementById("lettersOnlyMessage").style.display = 'none';
+		}
+		
+		function showNamesRequiredMessage() {
+			document.getElementById("namesRequiredMessage").style.display = 'inline';
+		}
+		
+		function hideNamesRequiredMessage() {
+			document.getElementById("namesRequiredMessage").style.display = 'none';
+		}
+		
+		function isFieldLettersOnly(field) {
+			var letterExp = /^[a-zA-Z]*$/;
+			
+			return (field.match(letterExp) != null);
+		}
+	
+		function validateFields() {
+			var firstName = document.getElementsByName("firstName")[0].value;
+			var middleName = document.getElementsByName("middleInitial")[0].value;
+			var lastName = document.getElementsByName("lastName")[0].value;
+			
+			var allFieldsValid = true;
+			if (isFieldLettersOnly(firstName)
+					&& isFieldLettersOnly(middleName) 
+					&& isFieldLettersOnly(lastName)) {
+				hideLettersOnlyMessage();
+			} else {
+				showLettersOnlyMessage();
+				allFieldsValid = false;
+			}
+			
+			if (firstName != '' && lastName != '') {
+				hideNamesRequiredMessage();
+			} else {
+				showNamesRequiredMessage();
+				allFieldsValid = false;
+			}
+			
+			if (allFieldsValid) {
+				enableSubmit();
+			} else {
+				disableSubmit();
+			}
+			
+			//alert("firstName letters only: " + isFieldLettersOnly(document.getElementsByName("firstName")[0].value));
+		}
+	</script>
+</head>
 <body>
 <h3>Names</h3>
 <form method="GET" action="countryOfCitizenship.jsp">
-	First Name: <input type="text" size="20" name="firstName"/>
-	<br> Middle Initial: <input type="text" size="1" name="middleInitial"/>
-	<br> Last Name: <input type="text" size="20" name="lastName"/>
-	<br> <input type="submit" value="Submit"/>
+	First Name: <input type="text" size="20" name="firstName" onkeyup="validateFields();"/>
+	<br> Middle Initial: <input type="text" size="1" name="middleInitial" onkeyup="validateFields();"/>
+	<br> Last Name: <input type="text" size="20" name="lastName" onkeyup="validateFields();"/>
+	<br> <input id="submit" type="submit" value="Submit" disabled="disabled"/>
 </form>
+<div id="lettersOnlyMessage" style="display:none;color:red">
+	All names must be only upper and lower case letters.
+</div>
+<br/>
+<div id="namesRequiredMessage" style="color:red">
+	You must enter a first name and last name.
+</div>
 </body>
 </html>
