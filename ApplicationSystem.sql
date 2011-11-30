@@ -34,7 +34,7 @@ CREATE TABLE users(
 	ID SERIAL PRIMARY KEY,
 	username TEXT NOT NULL,
 	password TEXT NOT NULL,
-	email TEXT NOT NULL,
+	email TEXT,
 	UNIQUE(username),
 	UNIQUE(email)
 );
@@ -84,13 +84,13 @@ CREATE TABLE reviews (
 	ID SERIAL PRIMARY KEY,
 	grade INTEGER NOT NULL,
 	comment TEXT NOT NULL,
-	reviewer INTEGER REFERENCES users (ID) NOT NULL,
+	reviewer INTEGER REFERENCES users (ID) ON DELETE CASCADE NOT NULL,
 	applicant INTEGER REFERENCES applicants (ID) NOT NULL
 );
 
 CREATE TABLE workload (
 	ID SERIAL PRIMARY KEY,
-	reviewer INTEGER REFERENCES users (ID) NOT NULL,
+	reviewer INTEGER REFERENCES users (ID) ON DELETE CASCADE NOT NULL,
 	applicant INTEGER REFERENCES applicants (ID) NOT NULL
 );
 
@@ -4125,3 +4125,15 @@ SELECT name FROM
 WHERE name = LOWER('Imperial College of science and technology');
 
 SELECT * FROM applicants, users WHERE applicants.userId = users.id AND username = 'TomApplicant';
+SELECT * FROM userRoles;
+SELECT * FROM users;
+
+SELECT * FROM reviews;
+
+INSERT INTO users (username, password) VALUES ('hi2', md5('lo'));
+
+SELECT * FROM users s
+			WHERE s.username IN
+			(SELECT userName
+			FROM userRoles
+			WHERE role = 'reviewer');

@@ -13,6 +13,8 @@
 		<form-bean type="com.cse135project.forms.ApplicantFormCancel" name="applicantFormCancel" />
 		<form-bean type="com.cse135project.forms.ReviewFormSubmit" name="reviewFormSubmit" />
 		<form-bean type="com.cse135project.forms.AddReviewerToApplicantForm" name="addReviewerToApplicantForm" />
+        <form-bean type="com.cse135project.forms.ReviewerFormSubmit" name="reviewerFormSubmit" />
+        <form-bean type="com.cse135project.forms.StartReviewProcessForm" name="startReviewProcessForm" />
 	</form-beans>
 
 	<!-- Global Exception Definitions -->
@@ -40,6 +42,30 @@
 			<forward name="applicationExists" path="/yourApplication.jsp" />
 			<forward name="noApplicationExists" path="/names.html" />
 		</action>
+		
+		<action path="/chairsHome" type="com.cse135project.actions.ChairsHomeAction">
+			<forward name="processStarted" path="/reviewHub.jsp" />
+			<forward name="processNotStarted" path="/selectReviewers.jsp" />
+		</action>
+		
+		<!-- Case 1 Actions -->
+        <action path="/showReviewers" type="com.cse135project.actions.ShowReviewersAction">
+            <forward name="success" path="/selectReviewers.jsp" />
+        </action>
+       
+        <action path="/addReviewer" type="com.cse135project.actions.AddReviewerAction"
+            validate="true" scope="request" input="/showReviewers.do" name="reviewerFormSubmit">
+            <forward name="success" path="/showReviewers.do" redirect="true" />
+        </action>
+       
+        <action path="/deleteReviewer" type="com.cse135project.actions.DeleteReviewerAction"
+            validate="false" scope="request" input="/showReviewers.do" name="reviewerFormSubmit">
+            <forward name="success" path="/showReviewers.do" redirect="true" />
+        </action>
+        <action path="/startReviewProcess" type="com.cse135project.actions.StartReviewProcessAction"
+            validate="true" scope="request" input="/showReviewers.do" name="startReviewProcessForm">
+            <forward name="success" path="/showReviewers.do" redirect="true" />
+        </action>
 		
 		<!-- Case 2 Actions -->
 		<action path="/disciplineAnalytics" type="com.cse135project.actions.DisciplineAnalyticsAction">
