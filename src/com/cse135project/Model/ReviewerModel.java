@@ -55,6 +55,15 @@ public class ReviewerModel{
 
 	private static final String roundRobin4 = 
 			"DROP TABLE tmp";
+	
+	private static final String getUnassignedApplicantsString =
+			"SELECT * FROM applicants "
+			+ "WHERE id NOT IN (SELECT applicant FROM reviews) "
+			+ "AND id NOT IN (SELECT applicant FROM workload);";
+	
+	private static final String assignApplicantString = 
+			"INSERT INTO workload (reviewer, applicant) VALUES (?, ?)";
+	
 	private static final String isInDb = 
 			"SELECT count(*) FROM userRoles WHERE username = ?";
 	
@@ -74,7 +83,7 @@ public class ReviewerModel{
 			
 			return crsReviewers;
 		} catch (SQLException e) {
-			throw new DataBindingException(e);
+			throw new DbException(e);
 		} catch (NamingException e) {
 			throw new DbException(e);
 		} 
@@ -98,7 +107,7 @@ public class ReviewerModel{
 			
 			
 		} catch (SQLException e) {
-			throw new DataBindingException(e);
+			throw new DbException(e);
 		} catch (NamingException e) {
 			throw new DbException(e);
 		} 
@@ -156,57 +165,36 @@ public class ReviewerModel{
 		try {
 			Connection conn = DBConnection.dbConnect();
 			
-			/*calculate number of applications*/
-			PreparedStatement pstmt = conn.prepareStatement(roundRobin);
-			ResultSet rset = pstmt.executeQuery();
-			rset.next();
-			int numberOfApplications = rset.getInt(1);
+			/* Get all applicants not assigned to reviewer */
+			PreparedStatement pstmt = conn.prepareStatement(getUnassignedApplicantsString);
+			ResultSet unassignedApplicants = pstmt.executeQuery();
 			
-			/*calculate number of reviewers*/
-			PreparedStatement pstmt1 = conn.prepareStatement(roundRobin1);
-			ResultSet rset1 = pstmt1.executeQuery();
-			rset.next();
-			int numberOfReviewers = rset1.getInt(1);
+			/* Get all reviewers */
+			CachedRowSet reviewers = getReviewers();
 			
-			/* calculate applicants per reviewer*/
-			int applicantsPerReviewer = numberOfApplications / numberOfReviewers;
+			/* Do nothing if there are no reviewers */
+			if (reviewers.size() == 0) return;
 			
-			/*create a temporary table of reviewers*/
-			PreparedStatement pstmt2 = conn.prepareStatement(roundRobin2);
-			pstmt2.execute();
-			
-			int i = 1; //tmp reviewer id
-			int j = 1; //starting place for reviewer i
-			int k = applicantsPerReviewer+1;  //finishing place for reviewer i
-		
-			while(i != numberOfReviewers){
-				PreparedStatement pstmt3 = conn.prepareStatement(roundRobin3);
-				pstmt3.setInt(1, i);
-				pstmt3.setInt(2, j);
-				pstmt3.setInt(3, k);
-				i++;
-				j = k;
-				k = k + applicantsPerReviewer;
-				pstmt3.close();
+			PreparedStatement assignApplicantStmt = conn.prepareStatement(assignApplicantString);
+			while (unassignedApplicants.next()) {
+				if (!reviewers.next()) {
+					reviewers.beforeFirst();
+					reviewers.next();
+				}
 				
+				assignApplicantStmt.setInt(1, reviewers.getInt("id"));
+				assignApplicantStmt.setInt(2, unassignedApplicants.getInt("id"));
+				assignApplicantStmt.execute();
 			}
-			
-			/*delete tmp table of reviewers*/
-			PreparedStatement pstmt4 = conn.prepareStatement(roundRobin4);
-			pstmt4.execute();
-			
 		
 			pstmt.close();
-			pstmt1.close();
-			pstmt2.close();
-			
-			pstmt4.close();
+			assignApplicantStmt.close();
 			
 			conn.close();
 			
 		
 		} catch (SQLException e) {
-			throw new DataBindingException(e);
+			throw new DbException(e);
 		} catch (NamingException e) {
 			throw new DbException(e);
 		} 

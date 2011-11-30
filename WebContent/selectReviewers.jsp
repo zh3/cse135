@@ -13,12 +13,7 @@
 		if(request.getAttribute("crsReviewers") != null){
 			reviewers = (RowSet) request.getAttribute("crsReviewers");
 		} 
-		
-		int startReviewProcess = 0;
-		if(request.getAttribute("enoughReviewers") != null){
-		   startReviewProcess = (Integer) request.getAttribute("enoughReviewers");
-		}
-			int i = 0;
+
 		%>
 	</head>
 	<body>
@@ -33,38 +28,30 @@
 			<td><html:reset /></td>
 		</html:form>
 		
-		<br/>
-		
 		<h3>Current Reviewers</h3>
 		<table>
-		<% while(reviewers!=null && reviewers.next()){ %>
+		<%  int i = 0;
+			while(reviewers!=null && reviewers.next()){ %>
 			   <tr>
 			   <html:form action= "/deleteReviewer">
 			   <td>
-			   <html:text property = "username" size = "15" disabled="true"
+			   <html:text property = "username" size = "15" readonly="true"
 			   	    value="<%=reviewers.getString(\"username\") %>" />
 			   	</td>
 			   	
 			   	<td><html:submit value= "Delete" /></td>
 			   	</html:form>
 			   	</tr>
-		<%      i++; 
-		   } %>
+		<% i++; } 
+			
+		%>
 		   </table>
-		   
-		   <% if(startReviewProcess == 1){ %>
-		   		<a href = "disciplineAnalytics.do">Discipline Analytics </a>
-		   		<a href = "applicationsByReviewer.do">Applications by reviewer </a>
-		   		<a href = "specializationAnalytics.do">Specialization analytics</a>
-		   <% } %>
-		   
-		   <%
-		   if( startReviewProcess == 0){ %>
-		   <html:form action = "/startReviewProcess" >
-		   <html:text property="selectedReviewers" size = "3" value= "<%= Integer.toString(i)%>"/>
-		   <td><html:submit value= "start review process" /></td>
-		   	</html:form>
-		<%} %>
+		<h3>Start Review Process</h3>
+		<html:form action = "/startReviewProcess" >
+		   Total Reviewers: <html:text property="selectedReviewers" size="3" value="<%= Integer.toString(i)%>" 
+		   			  readonly="true"/>
+		   <td><html:submit value= "Start" /></td>
+		</html:form>
 		
 	</body>
 </html>

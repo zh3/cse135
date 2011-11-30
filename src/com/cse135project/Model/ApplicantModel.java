@@ -7,7 +7,6 @@ import java.sql.SQLException;
 
 import javax.naming.NamingException;
 import javax.sql.rowset.CachedRowSet;
-import javax.xml.bind.DataBindingException;
 
 import com.cse135project.DBConnection;
 import com.cse135project.db.DbException;
@@ -172,7 +171,7 @@ public class ApplicantModel {
 			
 			return crsApplicantsByReviewer;
 		} catch (SQLException e) {
-			throw new DataBindingException(e);
+			throw new DbException(e);
 		} catch (NamingException e) {
 			throw new DbException(e);
 		} 
@@ -194,7 +193,7 @@ public class ApplicantModel {
 			
 			return crsApplicantsByReviewer;
 		} catch (SQLException e) {
-			throw new DataBindingException(e);
+			throw new DbException(e);
 		} catch (NamingException e) {
 			throw new DbException(e);
 		} 
@@ -216,7 +215,7 @@ public class ApplicantModel {
 			
 			return crsApplicantsByReviewer;
 		} catch (SQLException e) {
-			throw new DataBindingException(e);
+			throw new DbException(e);
 		} catch (NamingException e) {
 			throw new DbException(e);
 		} 
@@ -247,7 +246,7 @@ public class ApplicantModel {
 			pstmt.close();
 			conn.close();
 		} catch (SQLException e) {
-			throw new DataBindingException(e);
+			throw new DbException(e);
 		} catch (NamingException e) {
 			throw new DbException(e);
 		}
@@ -266,7 +265,7 @@ public class ApplicantModel {
 			pstmt.close();
 			conn.close();
 		} catch (SQLException e) {
-			throw new DataBindingException(e);
+			throw new DbException(e);
 		} catch (NamingException e) {
 			throw new DbException(e);
 		}
@@ -289,7 +288,7 @@ public class ApplicantModel {
 			
 			return crsApplicantsByReviewer;
 		} catch (SQLException e) {
-			throw new DataBindingException(e);
+			throw new DbException(e);
 		} catch (NamingException e) {
 			throw new DbException(e);
 		} 
@@ -312,7 +311,7 @@ public class ApplicantModel {
 			
 			return crsApplicantsByReviewer;
 		} catch (SQLException e) {
-			throw new DataBindingException(e);
+			throw new DbException(e);
 		} catch (NamingException e) {
 			throw new DbException(e);
 		} 
@@ -339,7 +338,7 @@ public class ApplicantModel {
 			
 			return disciplineName;
 		} catch (SQLException e) {
-			throw new DataBindingException(e);
+			throw new DbException(e);
 		} catch (NamingException e) {
 			throw new DbException(e);
 		} 
@@ -366,7 +365,7 @@ public class ApplicantModel {
 			
 			return disciplineName;
 		} catch (SQLException e) {
-			throw new DataBindingException(e);
+			throw new DbException(e);
 		} catch (NamingException e) {
 			throw new DbException(e);
 		} 
@@ -389,7 +388,7 @@ public class ApplicantModel {
 			
 			return applicantWithId;
 		} catch (SQLException e) {
-			throw new DataBindingException(e);
+			throw new DbException(e);
 		} catch (NamingException e) {
 			throw new DbException(e);
 		} 
@@ -412,7 +411,7 @@ public class ApplicantModel {
 			
 			return applicantDegrees;
 		} catch (SQLException e) {
-			throw new DataBindingException(e);
+			throw new DbException(e);
 		} catch (NamingException e) {
 			throw new DbException(e);
 		} 
@@ -435,7 +434,7 @@ public class ApplicantModel {
 			
 			return applicantDegrees;
 		} catch (SQLException e) {
-			throw new DataBindingException(e);
+			throw new DbException(e);
 		} catch (NamingException e) {
 			throw new DbException(e);
 		} 
@@ -459,7 +458,7 @@ public class ApplicantModel {
 			
 			return unassociatedReviewers;
 		} catch (SQLException e) {
-			throw new DataBindingException(e);
+			throw new DbException(e);
 		} catch (NamingException e) {
 			throw new DbException(e);
 		} 
@@ -485,7 +484,7 @@ public class ApplicantModel {
 			
 			return getApplicantWithId(applicantId);
 		} catch (SQLException e) {
-			throw new DataBindingException(e);
+			throw new DbException(e);
 		} catch (NamingException e) {
 			throw new DbException(e);
 		} 
@@ -511,7 +510,7 @@ public class ApplicantModel {
 			
 			return getApplicantDegrees(applicantId);
 		} catch (SQLException e) {
-			throw new DataBindingException(e);
+			throw new DbException(e);
 		} catch (NamingException e) {
 			throw new DbException(e);
 		} 
@@ -540,7 +539,7 @@ public class ApplicantModel {
 			
 			return reviewCount;
 		} catch (SQLException e) {
-			throw new DataBindingException(e);
+			throw new DbException(e);
 		} catch (NamingException e) {
 			throw new DbException(e);
 		} 
@@ -566,7 +565,7 @@ public class ApplicantModel {
 			
 			return reviewerId;
 		} catch (SQLException e) {
-			throw new DataBindingException(e);
+			throw new DbException(e);
 		} catch (NamingException e) {
 			throw new DbException(e);
 		} 
@@ -588,7 +587,7 @@ public class ApplicantModel {
 			
 			return applicationExists;
 		} catch (SQLException e) {
-			throw new DataBindingException(e);
+			throw new DbException(e);
 		} catch (NamingException e) {
 			throw new DbException(e);
 		} 
@@ -610,7 +609,7 @@ public class ApplicantModel {
 			
 			return universityExists;
 		} catch (SQLException e) {
-			throw new DataBindingException(e);
+			throw new DbException(e);
 		} catch (NamingException e) {
 			throw new DbException(e);
 		} 
@@ -637,7 +636,7 @@ public class ApplicantModel {
 			
 			conn.close();
 		} catch (SQLException e) {
-			throw new DataBindingException(e);
+			throw new DbException(e);
 		} catch (NamingException e) {
 			throw new DbException(e);
 		}

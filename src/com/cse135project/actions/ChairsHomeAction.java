@@ -17,6 +17,12 @@ public class ChairsHomeAction extends Action {
 					throws DbException {
 		request.setAttribute("crsReviewers", ReviewerModel.getReviewers());
 		
-		return mapping.findForward("processNotStarted");
+		Boolean processStarted = (Boolean) request.getServletContext().getAttribute("processStarted");
+		
+		if (processStarted != null && processStarted) {
+			return mapping.findForward("processStarted");
+		} else {
+			return mapping.findForward("processNotStarted");
+		}
 	}
 }

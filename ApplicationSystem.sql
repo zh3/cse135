@@ -3982,6 +3982,7 @@ VALUES (8, 10, 2010, 'PhD', 2, 2, 3.1);
 INSERT INTO degrees (applicant, awardMonth, awardYear, title, university, discipline, gpa)
 VALUES (8, 10, 2010, 'PhD', 2, 4, 4.0);
 
+/*
 INSERT INTO workload (reviewer, applicant) VALUES (5, 1);
 INSERT INTO workload (reviewer, applicant) VALUES (5, 2);
 INSERT INTO workload (reviewer, applicant) VALUES (6, 3);
@@ -3993,7 +3994,7 @@ INSERT INTO reviews (grade, comment, reviewer, applicant) VALUES (2, 'OK Applica
 INSERT INTO reviews (grade, comment, reviewer, applicant) VALUES (4, 'Great Application', 6, 6);
 INSERT INTO reviews (grade, comment, reviewer, applicant) VALUES (3, 'Good Application', 5, 7);
 INSERT INTO reviews (grade, comment, reviewer, applicant) VALUES (4, 'Excellent Application', 6, 7);
-
+*/
 select * from applicants;
 select * from users;
 select * from userroles;
@@ -4076,7 +4077,7 @@ WHERE applicantAvgGrades.applicantId = applicants.id
 AND reviews.applicant = applicants.id) AS applicantsWithAvgGrade
 WHERE applicantsWithAvgGrade.id IN
 ((SELECT DISTINCT id FROM applicants WHERE specialization = 1))
-GROUP BY id, firstname, middlename, lastname, applicationStatus;
+GROUP BY id, firstname, middlename, lastname, applicationStatus; 
 /* UPDATE applicants SET applicationStatus = 'Accepted' WHERE id = 1; */
 
 SELECT * FROM specializations;
@@ -4137,3 +4138,8 @@ SELECT * FROM users s
 			(SELECT userName
 			FROM userRoles
 			WHERE role = 'reviewer');
+
+SELECT * FROM workload;
+SELECT * FROM applicants 
+WHERE id NOT IN (SELECT applicant FROM reviews) 
+AND id NOT IN (SELECT applicant FROM workload);

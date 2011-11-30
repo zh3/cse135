@@ -64,7 +64,7 @@
         </action>
         <action path="/startReviewProcess" type="com.cse135project.actions.StartReviewProcessAction"
             validate="true" scope="request" input="/showReviewers.do" name="startReviewProcessForm">
-            <forward name="success" path="/showReviewers.do" redirect="true" />
+            <forward name="success" path="/reviewHub.jsp" redirect="true" />
         </action>
 		
 		<!-- Case 2 Actions -->

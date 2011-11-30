@@ -16,13 +16,13 @@ public class StartReviewProcessAction extends Action {
 			HttpServletRequest request, HttpServletResponse response) 
 					throws Exception {
 		StartReviewProcessForm submitForm = (StartReviewProcessForm) form;
-		request.setAttribute("enoughReviewers", 1);
+
 		if (Integer.parseInt(submitForm.getSelectedReviewers()) >= 3)
 		{
 			ReviewerModel.assignWorkload();
 		}
 		
-	
+		request.getServletContext().setAttribute("processStarted", new Boolean(true));
 		
 		return mapping.findForward("success");
 	}

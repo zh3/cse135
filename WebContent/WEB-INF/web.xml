@@ -101,6 +101,20 @@
   
   <security-constraint>
     <web-resource-collection>
+      <web-resource-name>Chair Area</web-resource-name>
+      <!-- Define the context-relative URL(s) to be protected -->
+      <url-pattern>/chairsHome.do</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>chair</role-name>
+    </auth-constraint>
+    <user-data-constraint>
+    	<transport-guarantee>CONFIDENTIAL</transport-guarantee>
+    </user-data-constraint>
+  </security-constraint>
+  
+  <security-constraint>
+    <web-resource-collection>
       <web-resource-name>Reviewer Area</web-resource-name>
       <!-- Define the context-relative URL(s) to be protected -->
       <url-pattern>/review.do</url-pattern>

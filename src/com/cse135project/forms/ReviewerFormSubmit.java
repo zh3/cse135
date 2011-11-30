@@ -91,8 +91,7 @@ public class ReviewerFormSubmit extends ActionForm {
 		String rx1 = "^.*[a-z].*$";
 		String rx2 = "^.*[A-Z].*$";
 		if(!(password.matches(rx1) && password.matches(rx2) && password.length() >= 8)){
-			errors.add("password", new ActionMessage("errors.invalid", 
-					"password"));
+			errors.add("password", new ActionMessage("errors.passwordInvalid"));
 		}
 		
 		return errors;
