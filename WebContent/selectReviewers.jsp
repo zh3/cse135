@@ -37,21 +37,15 @@
 		
 		<h3>Current Reviewers</h3>
 		<table>
-		<tr>
-			<th>Reviewer</th>
-			<th>Action</th>
-		</tr>
 		<% while(reviewers!=null && reviewers.next()){ %>
 			   <tr>
 			   <html:form action= "/deleteReviewer">
 			   <td>
-			   <html:text property = "username" size = "15"
+			   <html:text property = "username" size = "15" disabled="true"
 			   	    value="<%=reviewers.getString(\"username\") %>" />
 			   	</td>
 			   	
 			   	<td><html:submit value= "Delete" /></td>
-				<td><html:reset /></td>
-			   	
 			   	</html:form>
 			   	</tr>
 		<%      i++; 
